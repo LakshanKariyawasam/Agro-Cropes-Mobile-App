@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="dark">
+  <ion-slides *ngIf="promoImagesLoaded" autoplay=3000 slidesPerView=1>
+    <ion-slide *ngFor="let promo of promoSliders">
+      <img src="{{promo.name}}" alt="">
+    </ion-slide>
+
+  </ion-slides>
+  <!-- <ion-grid>
+    <ion-row *ngFor="let i of productRows">
+      <ion-col *ngFor="let product of products | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(product)">
+        <ion-card>
+          <img src="{{product.thumb}}" alt="">
+          <ion-card-content>
+            <p>
+              {{product.price | currency:'USD':true:'1.2-2'}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <ion-grid>
+    <ion-row class="carts">
+      <ion-col>
+        <div class="cart card" (click)="viewDetail(Vegetables)" margin-bottom>
+          <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/img/vegetables.png)'}">
+            <div class="background-filter rlt">
+              <div class="align-bottom" padding-left padding-right>
+                <h6 class="pull-left text-white" ion-text>Vegetables</h6>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="cart card" tappable (click)="viewDetail(trip)" margin-bottom>
+          <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/img/fruits.png)'}">
+            <div class="background-filter rlt">
+              <div class="align-bottom" padding-left padding-right>
+                <h6 class="pull-left text-white" ion-text>Fruits</h6>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<!-- autoplay=6000 -->

@@ -1,0 +1,64 @@
+page-home {
+  
+    ion-content {
+        
+        .scroll-content,
+        fixed-content {
+            
+            // background: color($colors,contentbg);
+            ion-slides{
+                height: 35%;
+                .slide-zoom{
+                    height: 100%;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+               }
+            }
+       
+            .grid{
+
+                .col{
+                    padding:1px;
+                    ion-card{                        
+                        border-radius: 0;
+                        width: 100%;
+                        margin: 1px;
+                        ion-card-content{
+                            padding: 1px 13px;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    .carts {
+        .card {
+        border-radius: 1rem;
+        }
+      .cart {
+        overflow: hidden;
+    
+        .background {
+          background-size: 150% auto;
+          background-position: center;
+    
+          .background-filter {
+            height: 15rem;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+    
+            .align-bottom {
+              width: 100%;
+    
+              h6 {
+                margin-top: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+}
