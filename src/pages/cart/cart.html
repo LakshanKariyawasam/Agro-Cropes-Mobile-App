@@ -32,7 +32,7 @@
                 Remove
               </span>
               <span class="price">
-                {{itm.totalPrice | currency:'USD':true}}
+                {{itm.totalPrice | currency:'LKR':true}}
               </span>
             </div>
 
@@ -45,7 +45,7 @@
               </ion-avatar>
             </ion-item>
             <p style="color:#333" text-right>
-              Qty: {{itm.count}}
+              Kilos: {{itm.count}}
             </p>
           </ion-col>
 
@@ -61,7 +61,7 @@
     <ion-row>
       <ion-col class="addCart" (click)="checkOut()">
         <button round=true ion-button full color="secondary">
-          {{totalAmount | currency:'USD':true}} &nbsp; &nbsp; Checkout
+          {{totalAmount | currency:'LKR':true}} &nbsp; &nbsp; Checkout
         </button>
 
       </ion-col>

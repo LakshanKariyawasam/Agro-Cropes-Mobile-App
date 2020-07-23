@@ -61,7 +61,7 @@ export class CartPage {
     if (user) {
       this.navCtrl.push("CheckoutPage");
     } else {
-      this.navCtrl.setRoot("LoginPage");
+      this.navCtrl.setRoot("ordersPage");
     }
   }
 

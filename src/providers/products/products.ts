@@ -59,7 +59,7 @@ export class ProductsProvider {
   }
 
   getProducts() {
-    this.productRef.once('value', (snap) => {
+    this.productRef.orderByChild('status').equalTo(1).once('value', (snap) => {
       console.log("In Value");
       console.log(snap);
       this.products = [];
