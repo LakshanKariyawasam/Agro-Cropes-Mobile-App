@@ -12,7 +12,7 @@
   <div *ngIf="isEmptyCart" class="empty-cart">
     <div class="empty-results">
       <h3 text-center>
-          <ion-icon name="cart"></ion-icon>
+        <ion-icon name="cart"></ion-icon>
       </h3>
       <p text-center>
         Your cart is empty
@@ -25,14 +25,14 @@
       <ion-card-content>
         <ion-row>
           <ion-col col-7>
-            <h3 style="margin: 7px" text-left>{{itm.name}}</h3>
+            <h2 style="margin: 7px" text-left>{{itm.name}}</h2>
 
             <div class="itm-footer">
               <span (click)="removeItem(itm)" class="remove">
                 Remove
               </span>
               <span class="price">
-                {{itm.totalPrice | currency:'LKR':true}}
+                Kilos: {{itm.count}} kg
               </span>
             </div>
 
@@ -44,9 +44,9 @@
                 <img style="float: right" src="{{itm.thumb}}">
               </ion-avatar>
             </ion-item>
-            <p style="color:#333" text-right>
+            <!-- <p style="color:#333" text-right>
               Kilos: {{itm.count}}
-            </p>
+            </p> -->
           </ion-col>
 
         </ion-row>
@@ -55,13 +55,13 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="!isEmptyCart" class="single-footer">
+<ion-footer class="single-footer">
 
   <ion-grid>
     <ion-row>
       <ion-col class="addCart" (click)="checkOut()">
         <button round=true ion-button full color="secondary">
-          {{totalAmount | currency:'LKR':true}} &nbsp; &nbsp; Checkout
+          {{totalAmount}} kg &nbsp; &nbsp; Checkout
         </button>
 
       </ion-col>

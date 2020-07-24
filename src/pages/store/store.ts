@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, IonicPage, ToastController, Content } from 'ionic-angular';
+import { NavController, NavParams, Events, IonicPage, ToastController, Content, LoadingController } from 'ionic-angular';
 import { ProductsProvider } from '../../providers/products/products';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { CartProvider } from '../../providers/cart/cart';
@@ -24,10 +24,14 @@ export class StorePage {
   productCount: number = 1;
   cartItems: any[];
 
+
+  ratingValue: number = 3;
+
   @ViewChild('pageTop') pageTop: Content;
 
   constructor(public navCtrl: NavController,
     private productService: ProductsProvider,
+    private loadingCtrl: LoadingController,
     private events: Events, private nativePageTransitions: NativePageTransitions,
     public navParams: NavParams, public toastCtrl: ToastController, private cartService: CartProvider) {
   }
@@ -64,12 +68,23 @@ export class StorePage {
   }
 
   loadProducts() {
+    let loader = this.loadingCtrl.create({
+      content: 'Loading Promos..'
+    });
+    loader.present();
     this.productService.getProducts();
     this.events.subscribe('productsLoaded', () => {
       this.products = this.productService.products;
       this.productRows = Array.from(Array(Math.ceil(this.products.length / 2)).keys());
-
+      this.selectProduct = this.products[0];
+      loader.dismiss();
     })
+  }
+
+  logRatingChange(rating) {
+    console.log("changed rating: ", rating);
+    this.ratingValue = rating;
+    // do your stuff
   }
 
   showDetails(product) {

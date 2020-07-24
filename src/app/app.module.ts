@@ -19,6 +19,7 @@ import { ActivityService } from "../services/activity-service";
 import { TripService } from "../services/trip-service";
 import { WeatherProvider } from "../services/weather";
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { StarRatingModule } from 'ionic3-star-rating';
 
 import { MyApp } from "./app.component";
 
@@ -49,6 +50,7 @@ firebase.initializeApp(config.firebaseConfig);
     BrowserModule,
     IonMarqueeModule,
     HttpClientModule,
+    StarRatingModule,
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: true,
@@ -59,6 +61,7 @@ firebase.initializeApp(config.firebaseConfig);
       name: '__Get_Rest',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [

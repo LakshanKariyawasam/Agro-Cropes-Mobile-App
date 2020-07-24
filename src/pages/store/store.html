@@ -15,40 +15,22 @@
 
 
 <ion-content padding #pageTop>
-  <ion-grid>
+  <div>
 
     <div class="card product-detail">
-      <ion-slides pager=true slidesPerView=1>
-        <ion-slide>
-          <img src="{{selectProduct?.thumb}}" alt="">
-        </ion-slide>
-        <ion-slide *ngFor="let prodImg of selectProduct?.images">
-          <img src="{{prodImg}}" alt="">
-        </ion-slide>
-      </ion-slides>
+      <img src="{{selectProduct?.thumb}}" alt="" style="float: left; max-width: 50% !important;">
 
-      <!-- <ion-row class="action-btn-wrap" no-padding>
-      <ion-col text-right>
-        <button ion-button icon-only class="wish-list-btn card" (click)="toggleWishList(item)" color="light">
-          <ion-icon name="md-heart" color="gray"></ion-icon>
-        </button>
-
-        <button ion-button icon-only class="wish-list-btn card" (click)="toggleWishList(item)" color="light">
-          <ion-icon name="share" color="gray"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row> -->
-      <div text-center padding margin-top class="border-bottom">
+      <div text-center margin-top class="border-bottom">
         <h2>{{selectProduct?.name}}</h2>
         <p>{{ selectProduct?.short_description }}</p>
-        <!-- <h3 class="price" color="danger" margin-top>{{ selectProduct?.price | currency:'USD':true
-          }}</h3>        -->
+        <ionic3-star-rating #rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#6BC331"
+          defaultColor="#aaaaaa" readonly="true" rating="{{selectProduct?.rating}}" fontSize="32px"
+          (ratingChanged)="logRatingChange($event)">
+        </ionic3-star-rating>
       </div>
-      <ion-row padding->
-        <ion-col>
-          <h4>
-            Kilos
-          </h4>
+      <ion-row>
+        <ion-col text-center margin-top>
+          <h3>Kilos</h3>
         </ion-col>
         <ion-col class="qty" text-right>
           <button (click)="decreaseProductCount()" ion-button small color="light">
@@ -75,6 +57,8 @@
       </ion-row>
     </ion-grid>
 
+  </div>
+  <ion-grid>
     <ion-row *ngFor="let i of productRows">
       <ion-col *ngFor="let product of products | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(product)">
         <ion-card>

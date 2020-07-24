@@ -26,6 +26,9 @@ export class CartPage {
   ) {}
 
   ionViewWillEnter(){
+    this.totalAmount = 0;
+    this.isEmptyCart = true;
+    this.isCartItemLoaded = false;
     this.loadCartItems();
   }
 
@@ -45,9 +48,11 @@ export class CartPage {
 
         if (this.cartItems.length > 0) {
           this.cartItems.forEach((v, indx) => {
-            this.totalAmount += parseInt(v.totalPrice);
+            this.totalAmount += parseInt(v.count);
           });
           this.isEmptyCart = false;
+          console.log("isEmptyCart :::",this.isEmptyCart);
+          console.log("totalAmount :::",this.totalAmount);
         }
 
         this.isCartItemLoaded = true;
