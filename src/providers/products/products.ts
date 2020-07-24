@@ -6,6 +6,8 @@ import firebase from 'firebase/app'
 export class ProductsProvider {
   promoRef = firebase.database().ref("promotions");
   productRef = firebase.database().ref("products");
+  photoRef = firebase.storage().ref();
+
   promos: Array<any> = [];
   products: Array<any> = [];
   constructor(public events: Events) {
@@ -50,7 +52,6 @@ export class ProductsProvider {
             short_description: tempProducts[key].short_description,
             thumb: tempProducts[key].thumb
           };
-
           this.products.push(singleProduct);
         }
       }
@@ -78,8 +79,13 @@ export class ProductsProvider {
             thumb: tempProducts[key].thumb
           };
 
-          console.log("singleProduct :: ", singleProduct)
-          this.products.push(singleProduct);
+          this.photoRef.child('products/' + singleProduct.thumb)
+            .getDownloadURL().then(function (url) {
+              singleProduct.thumb = url;
+            });
+
+            console.log("singleProduct :: ", singleProduct)
+            this.products.push(singleProduct);
         }
       }
       this.events.publish('productsLoaded');
