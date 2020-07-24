@@ -23,18 +23,18 @@ export class TutorialPage {
   constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage) {
     this.slides = [
       {
-        title: 'Welcome to <b>Agro Cropes</b>',
+        title: '<b>Choose your Desired Item</b>',
         description: 'No More Issues With Your Order Again. Our App Taking Care Of Everything ',
         image: 'assets/imgs/s1.png',
       },
       {
-        title: 'What will be?',
+        title: '<b>Connect your Trade Center</b>',
         description: 'We Will Connect You To The Vendors And There Stores. There You can Buy What You Need Easley. ',
         image: 'assets/imgs/s2.png',
       },
       {
-        title: 'How it work?',
-        description: 'From Vendors Add Your Needs by Tap On Them. You Also Can Manage Your cart And Conform Your Foods Before Order',
+        title: '<b>Pick up or Delivery</b>',
+        description: 'Based On Your Location Your Foods will Be delivery.Lets Sign up  ',
         image: 'assets/imgs/s3.png',
       }
     ];
