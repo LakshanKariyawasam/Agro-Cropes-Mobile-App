@@ -10,7 +10,7 @@
   <ion-slides (ionWillChange)="onSlideChangeStart($event)" pager>
     <ion-slide *ngFor="let slide of slides">
       <img [src]="slide.image" class="slide-image" alt="slide.title" />
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <h1 class="slide-title" [innerHTML]="slide.title"></h1>
       <p [innerHTML]="slide.description"></p>
     </ion-slide>
     <ion-slide>
