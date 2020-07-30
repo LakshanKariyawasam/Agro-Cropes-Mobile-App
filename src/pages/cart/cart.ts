@@ -15,7 +15,7 @@ import firebase from "firebase";
 })
 export class CartPage {
   cartItems: any[] = [];
-  totalAmount: number = 0;
+  totalCount: number = 0;
   isCartItemLoaded: boolean = false;
   isEmptyCart: boolean = true;
   constructor(
@@ -26,7 +26,7 @@ export class CartPage {
   ) {}
 
   ionViewWillEnter(){
-    this.totalAmount = 0;
+    this.totalCount = 0;
     this.isEmptyCart = true;
     this.isCartItemLoaded = false;
     this.loadCartItems();
@@ -37,6 +37,7 @@ export class CartPage {
   // }
 
   loadCartItems() {
+    this.totalCount = 0;
     let loader = this.loadingCtrl.create({
       content: "Wait.."
     });
@@ -48,11 +49,11 @@ export class CartPage {
 
         if (this.cartItems.length > 0) {
           this.cartItems.forEach((v, indx) => {
-            this.totalAmount += parseInt(v.count);
+            this.totalCount += parseInt(v.count);
           });
           this.isEmptyCart = false;
           console.log("isEmptyCart :::",this.isEmptyCart);
-          console.log("totalAmount :::",this.totalAmount);
+          console.log("totalCount :::",this.totalCount);
         }
 
         this.isCartItemLoaded = true;
@@ -66,7 +67,7 @@ export class CartPage {
     if (user) {
       this.navCtrl.push("CheckoutPage");
     } else {
-      this.navCtrl.setRoot("ordersPage");
+      this.navCtrl.setRoot("LoginPage");
     }
   }
 

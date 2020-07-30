@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, MenuController, NavController, ToastController, IonicPage } from "ionic-angular";
+import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController } from "ionic-angular";
 import { UserData } from "../../providers/user-data";
+import { AuthProvider } from "../../providers/auth/auth";
 
 @IonicPage()
 @Component({
@@ -13,7 +14,8 @@ export class LoginPage implements OnInit {
   signupform: FormGroup;
   userData = { "username": "", "password": "" };
 
-  constructor(public nav: NavController, public forgotCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, public userDataOne: UserData) {
+  constructor(public nav: NavController, public alertCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, public userDataOne: UserData, public authService: AuthProvider,
+    private loadingCtrl: LoadingController) {
     this.menu.swipeEnable(false);
   }
 
@@ -23,34 +25,48 @@ export class LoginPage implements OnInit {
     //  let password = this.signupform.get('password').value;
     //  let username = this.signupform.get('username').value;
     this.signupform = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(10)]),
+      username: new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), Validators.minLength(4), Validators.maxLength(30)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
     });
   }
 
-  // go to register page
-  register() {
-    this.nav.setRoot('RegisterPage');
-  }
-
   // login and go to home page
   login() {
-    if (this.userData.username == "admin" && this.userData.password == "admin123") {
+    let loader = this.loadingCtrl.create({
+      content: 'Authenticating..'
+    });
+    loader.present();
+    let loginParams = {
+      email:this.userData.username,
+      password:this.userData.password
+    }
+
+    this.authService.login(loginParams).then((res)=>{
+      loader.dismiss();
       this.nav.setRoot('TabsPage', { tabIndex: 0 });
-      this.userDataOne.login(this.userData.username);
-    }
-    else {
-      const toast = this.toastCtrl.create({
-        message: 'Username or Password incorrect.',
-        duration: 3000
-      });
-      toast.present();
-      this.nav.setRoot('LoginPage');
-    }
+    }).catch((err)=>{
+      loader.dismiss();
+      this.presentAlert(err.message);
+    });
+
+
+  }
+
+  showRegisterPage() {
+    this.nav.push("RegisterPage");
+  }
+
+  presentAlert(message) {
+    let alert = this.alertCtrl.create({
+      title: 'Auth Error',
+      subTitle: message,
+      buttons: ['Close']
+    });
+    alert.present();
   }
 
   forgotPass() {
-    let forgot = this.forgotCtrl.create({
+    let forgot = this.alertCtrl.create({
       title: 'Forgot Password?',
       message: "Enter you email address to send a reset link password.",
       inputs: [
