@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Vegitables</ion-title>
+    <ion-title>{{type}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -63,6 +63,20 @@
       <ion-col *ngFor="let product of products | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(product)">
         <ion-card>
           <img src="{{product.thumb}}" alt="">
+          <ion-card-content>
+            <!-- <p>
+              {{product.price | currency:'USD':true:'1.2-2'}}
+            </p> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row *ngFor="let i of fruitsRows">
+      <ion-col *ngFor="let fruit of fruits | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(fruit)">
+        <ion-card>
+          <img src="{{fruit.thumb}}" alt="">
           <ion-card-content>
             <!-- <p>
               {{product.price | currency:'USD':true:'1.2-2'}}

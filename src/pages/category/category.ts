@@ -28,7 +28,13 @@ export class CategoryPage {
       this.productRows = Array.from(Array(Math.ceil(this.products.length/2)).keys());
     })
   }
-
+  loadFruits(catId) {
+    this.productService.getProductByCategoryy(catId);
+    this.events.subscribe('productsLoaded', () => {
+      this.products = this.productService.products;
+      this.productRows = Array.from(Array(Math.ceil(this.products.length/2)).keys());
+    })
+  }
 
   
   showDetails(product){

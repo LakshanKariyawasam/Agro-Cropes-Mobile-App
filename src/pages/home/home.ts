@@ -73,7 +73,8 @@ export class HomePage {
     })
   }
 
-  viewDetail(val) {
-    this.navCtrl.push("StorePage");
+  viewDetail(val: any) {
+    console.log("val::::",val)
+    this.navCtrl.push("StorePage",{val:val});
   }
 }

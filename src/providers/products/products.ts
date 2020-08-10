@@ -6,10 +6,12 @@ import firebase from 'firebase/app'
 export class ProductsProvider {
   promoRef = firebase.database().ref("promotions");
   productRef = firebase.database().ref("products");
+  productReff = firebase.database().ref("fruits");
   photoRef = firebase.storage().ref();
 
   promos: Array<any> = [];
   products: Array<any> = [];
+  fruits: Array<any> = [];
   constructor(public events: Events) {
 
   }
@@ -58,7 +60,29 @@ export class ProductsProvider {
       this.events.publish('productsLoaded');
     })
   }
-
+  getProductByCategoryy(categoryId) {
+    this.productReff.orderByChild('category_id').equalTo(categoryId).once('value', (snap) => {
+      this.fruits = [];
+      if (snap.val()) {
+        var tempProducts = snap.val();
+        for (var key in tempProducts) {
+          let singleProduct = {
+            id: key,
+            category_id: tempProducts[key].category_id,
+            name: tempProducts[key].name,
+            images: tempProducts[key].images,
+            price: tempProducts[key].price,
+            rating: tempProducts[key].rating,
+            sale_price: tempProducts[key].sale_price,
+            short_description: tempProducts[key].short_description,
+            thumb: tempProducts[key].thumb
+          };
+          this.fruits.push(singleProduct);
+        }
+      }
+      this.events.publish('productsLoaded');
+    })
+  }
   getProducts() {
     this.productRef.orderByChild('status').equalTo(1).once('value', (snap) => {
       console.log("In Value");
@@ -83,7 +107,7 @@ export class ProductsProvider {
             .getDownloadURL().then(function (url) {
               singleProduct.thumb = url;
             });
-
+          
             console.log("singleProduct :: ", singleProduct)
             this.products.push(singleProduct);
         }
@@ -91,5 +115,36 @@ export class ProductsProvider {
       this.events.publish('productsLoaded');
     });
   }
+  getProductss() {
+    this.productReff.orderByChild('status').equalTo(1).once('value', (snap) => {
+      console.log("In Value");
+      console.log(snap);
+      this.fruits = [];
+      if (snap.val()) {
+        var tempProducts = snap.val();
+        for (var key in tempProducts) {
+          let singleProduct = {
+            id: key,
+            category_id: tempProducts[key].category_id,
+            name: tempProducts[key].name,
+            images: tempProducts[key].images,
+            price: tempProducts[key].price,
+            rating: tempProducts[key].rating,
+            sale_price: tempProducts[key].sale_price,
+            short_description: tempProducts[key].short_description,
+            thumb: tempProducts[key].thumb
+          };
 
+          this.photoRef.child('fruits/' + singleProduct.thumb)
+            .getDownloadURL().then(function (url) {
+              singleProduct.thumb = url;
+            });
+          
+            console.log("singleProduct :: ", singleProduct)
+            this.fruits.push(singleProduct);
+        }
+      }
+      this.events.publish('productsLoaded');
+    });
+}
 }

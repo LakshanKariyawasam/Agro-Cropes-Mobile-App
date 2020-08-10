@@ -20,24 +20,35 @@ export class StorePage {
 
   products: any[];
   productRows: any;
+  fruitsRows: any;
   selectProduct: any;
   productCount: number = 1;
   cartItems: any[];
+
+  type: any;
 
 
   ratingValue: number = 3;
 
   @ViewChild('pageTop') pageTop: Content;
+  fruits: any;
 
   constructor(public navCtrl: NavController,
     private productService: ProductsProvider,
     private loadingCtrl: LoadingController,
     private events: Events, private nativePageTransitions: NativePageTransitions,
     public navParams: NavParams, public toastCtrl: ToastController, private cartService: CartProvider) {
+      if (this.navParams.get("val") == 'Vegetables') {
+        this.loadProducts();
+      } else {
+        this.loadFruits();
+      }
+
+      this.type = this.navParams.get("val");
   }
 
   ionViewWillEnter() {
-    this.loadProducts();
+    // this.loadProducts();
   }
 
   ionViewDidLoad() {
@@ -81,6 +92,20 @@ export class StorePage {
     })
   }
 
+  loadFruits() {
+    let loader = this.loadingCtrl.create({
+      content: 'Loading Promos..'
+    });
+    loader.present();
+    this.productService.getProductss();
+    this.events.subscribe('productsLoaded', () => {
+      this.fruits = this.productService.fruits;
+      this.fruitsRows = Array.from(Array(Math.ceil(this.fruits.length / 2)).keys());
+      this.selectProduct = this.fruits[0];
+      loader.dismiss();
+    })
+  }
+
   logRatingChange(rating) {
     console.log("changed rating: ", rating);
     this.ratingValue = rating;
@@ -102,6 +127,7 @@ export class StorePage {
     // this.navCtrl.push("SinglePage", { product: product });
 
     this.selectProduct = product;
+    this.selectProduct = this.fruits;
     this.pageTop.scrollToTop();
     this.productCount = 1;
   }
