@@ -18,33 +18,8 @@
     <ion-card-content>
       <ion-list>
         <p style="margin-bottom: 10px">
-          Calculated below you'll find your order, taxes, discounts and other amounts included.
+          Your order will be delivered or pickup based on your location.
         </p>
-
-        <ion-row>
-          <ion-col col-8>
-            <strong>
-              Subtotal
-            </strong>
-          </ion-col>
-          <ion-col col-4>
-            <span class="amt" text-right>
-              {{productAmt | currency:'LKR':true}}
-            </span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-8>
-            <strong>
-              Shipping
-            </strong>
-          </ion-col>
-          <ion-col col-4>
-            <span class="amt" text-right>
-              {{shippingFee | currency:'LKR':true}}
-            </span>
-          </ion-col>
-        </ion-row>
       </ion-list>
     </ion-card-content>
     <div class="total-wrap">
@@ -56,7 +31,7 @@
         </ion-col>
         <ion-col col-4>
           <span class="amt total" text-right>
-            {{totalAmount | currency:'LKR':true}}
+            {{totalCnt}} kg
           </span>
         </ion-col>
       </ion-row>
@@ -82,11 +57,10 @@
       </ion-item>
        <ion-item>
         <ion-label>
-          <div class="master-card"></div>
+          <div class="cash-on-dilevery"></div>
         </ion-label>
         <ion-label>
-          <p text-center>John Doe</p>
-          <p>**** **** **** 8950</p>
+          <p text-center>Cash On Dilevery</p>
         </ion-label>
         <ion-radio color="primary"></ion-radio>
       </ion-item>

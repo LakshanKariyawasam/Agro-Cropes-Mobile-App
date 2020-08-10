@@ -5,38 +5,36 @@ import firebase from "firebase";
 export class OrderProvider {
   firedata = firebase.database().ref("/orders");
   orderDetails = firebase.database().ref("/ordersdetails");
-  constructor() {}
+  constructor() { }
 
   placeOrder(orderObj: any) {
     var promise = new Promise((resolve, reject) => {
       let orderRef = this.makeid(10)
-let orderObject = {
-   orderRef: orderRef,
-  customerName:orderObj.name || '',
-  ShippingAmt:orderObj.shipping,
-  OrderAmt:orderObj.orderAmount,
-  totalAmount: orderObj.amount
-};
-//console.log('orderObject',orderObject);
-      this.firedata.push(orderObject).then(()=>{
+      let orderObject = {
+        orderRef: orderRef,
+        userId: orderObj.userId,
+        totalCount: orderObj.count,
+        dateInserted: firebase.database.ServerValue.TIMESTAMP
+      };
+      //console.log('orderObject',orderObject);
+      this.firedata.push(orderObject).then(() => {
         orderObj.orders.forEach((v, indx) => {
           //console.log(v);
           this.orderDetails.push({
             orderRef: orderRef,
             productName: v.name,
-            Qty: v.count,
-            amount: v.totalPrice
-          }).then(()=>{
+            qty: v.count
+          }).then(() => {
             resolve(true);
           })
         });
       })
-    
+
     });
     return promise;
   }
 
-  makeid(lenght:number) {
+  makeid(lenght: number) {
     var text = "";
     var possible =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

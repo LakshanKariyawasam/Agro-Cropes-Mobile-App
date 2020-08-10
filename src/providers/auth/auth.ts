@@ -26,7 +26,9 @@ export class AuthProvider {
           this.firedata.child(firebase.auth().currentUser.uid).set({
             name:userObj.name,
             address:userObj.address,
-            email:userObj.email
+            email:userObj.email,
+            mobile:userObj.mobile,
+            parentBisId:userObj.parentBisId
           }).then(()=>{
             resolve({ success: true });
           }).catch((err)=>{

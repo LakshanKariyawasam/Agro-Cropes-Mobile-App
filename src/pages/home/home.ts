@@ -66,6 +66,7 @@ export class HomePage {
 
     this.events.subscribe('promoLoaded', () => {
       this.promoSliders = this.productService.promos;
+      console.log("promoSliders :: ", this.promoSliders )
       if (this.promoSliders.length > 0) {
         this.promoImagesLoaded = true;
       }

@@ -29,6 +29,12 @@ export class ProductsProvider {
             name: tempPromo[key].thumb
           };
 
+          this.photoRef.child('sliders/' + singlePromo.name)
+            .getDownloadURL().then(function (url) {
+              singlePromo.name = url;
+              console.log("url :: ", singlePromo.name)
+            });
+
           this.promos.push(singlePromo);
         }
       }
@@ -106,10 +112,11 @@ export class ProductsProvider {
           this.photoRef.child('products/' + singleProduct.thumb)
             .getDownloadURL().then(function (url) {
               singleProduct.thumb = url;
+              console.log("url :: ", singleProduct.thumb)
             });
-          
-            console.log("singleProduct :: ", singleProduct)
-            this.products.push(singleProduct);
+
+          console.log("singleProduct :: ", singleProduct)
+          this.products.push(singleProduct);
         }
       }
       this.events.publish('productsLoaded');

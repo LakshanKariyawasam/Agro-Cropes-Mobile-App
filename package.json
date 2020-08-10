@@ -53,6 +53,7 @@
     "cordova-sqlite-storage": "^2.1.4",
     "es6-promise-plugin": "^4.2.2",
     "firebase": "^4.8.0",
+    "firebase-tools": "^8.6.0",
     "ionic-angular": "3.9.2",
     "ionic-marquee": "^0.2.0",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -60,6 +61,7 @@
     "ionic3-star-rating": "^2.1.1",
     "ionicons": "3.0.0",
     "minimist": "^1.2.5",
+    "nexmo": "^2.8.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "text-mask-addons": "^3.7.2",
@@ -69,6 +71,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.8",
     "@types/googlemaps": "^3.30.11",
+    "@types/node": "^10.9.2",
     "typescript": "2.4.2"
   },
   "description": "Ionic 3 Start Theme",
