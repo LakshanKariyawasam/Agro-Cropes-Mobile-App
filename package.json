@@ -58,6 +58,7 @@
     "ionic-marquee": "^0.2.0",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionic2-rating": "^1.2.2",
+    "ionic3-datepicker": "^2.5.3",
     "ionic3-star-rating": "^2.1.1",
     "ionicons": "3.0.0",
     "minimist": "^1.2.5",

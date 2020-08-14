@@ -6,6 +6,7 @@
 *.log
 *.tmp
 *.tmp.*
+*.js.*
 log.txt
 *.sublime-project
 *.sublime-workspace
@@ -34,3 +35,11 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+*.map
+.sourcemaps/10.js.map
+.sourcemaps/5.js.map
+.sourcemaps/6.js.map
+.sourcemaps/7.js.map
+.sourcemaps/8.js.map
+.sourcemaps/9.js.map
+.sourcemaps/main.js.map

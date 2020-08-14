@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -10,6 +10,7 @@ import { CartProvider } from "../../providers/cart/cart";
 import { AuthProvider } from "../../providers/auth/auth";
 import { OrderProvider } from "../../providers/order/order";
 
+
 @IonicPage()
 @Component({
   selector: "page-checkout",
@@ -20,6 +21,7 @@ export class CheckoutPage {
   userData = { "address": "", "email": "", "mobile": "", "name": "", "parentBisId": "" }
   totalCnt: number = 0;
   customerName: any;
+  selectdate: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,6 +59,7 @@ export class CheckoutPage {
       .then((response: any) => {
         this.customerName = response.name;
         this.userData = response;
+        this.selectdate = response.date;
         console.log("userData", this.userData);
       })
       .catch(err => {
@@ -84,7 +87,8 @@ export class CheckoutPage {
         userId: user.uid,
         name: this.customerName,
         count: this.totalCnt,
-        orders: this.cartItems
+        orders: this.cartItems,
+        date:this.selectdate
       };
 
       this.orderService.placeOrder(orderObj).then(() => {

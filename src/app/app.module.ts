@@ -33,6 +33,7 @@ import { CategoryProvider } from '../providers/category/category';
 import { OrderProvider } from '../providers/order/order';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
+
 firebase.initializeApp(config.firebaseConfig);
 
 // import services
@@ -61,7 +62,6 @@ firebase.initializeApp(config.firebaseConfig);
       name: '__Get_Rest',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
-    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -85,7 +85,8 @@ firebase.initializeApp(config.firebaseConfig);
     AuthProvider,
     CartProvider,
     CategoryProvider,
-    OrderProvider
+    OrderProvider,
+    
   ]
 })
 
