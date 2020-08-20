@@ -9,6 +9,7 @@ import { AuthProvider } from "../../providers/auth/auth";
   templateUrl: "register.html"
 })
 export class RegisterPage {
+  trade:any;
   name: any;
   address: any;
   email: any;
@@ -23,6 +24,7 @@ export class RegisterPage {
 
   register() {
     var userObj = {
+      trade:this.trade,
       name: this.name,
       address: this.address,
       email: this.email,

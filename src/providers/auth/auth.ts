@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Events } from "ionic-angular";
 import firebase from "firebase";
+import { UserData } from "../user-data";
 
 @Injectable()
 export class AuthProvider {
@@ -24,6 +25,8 @@ export class AuthProvider {
       firebase .auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
         .then(() => {
           this.firedata.child(firebase.auth().currentUser.uid).set({
+            userId :firebase.auth().currentUser.uid,
+            trade:userObj.trade,
             name:userObj.name,
             address:userObj.address,
             email:userObj.email,
