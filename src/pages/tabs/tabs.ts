@@ -10,6 +10,8 @@ export class TabsPage {
   // set the root pages for each tab
   tab1Root: any = 'HomePage';
   tab2Root: any = 'CartPage';
+  tab3Root: any = 'NotificationsPage';
+  tab4Root: any = '';
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {
