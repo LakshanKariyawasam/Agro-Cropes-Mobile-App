@@ -23,7 +23,7 @@ import { StarRatingModule } from 'ionic3-star-rating';
 
 import { MyApp } from "./app.component";
 
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 import { ProductsProvider } from '../providers/products/products';
 import { UserData } from '../providers/user-data';
@@ -32,7 +32,7 @@ import { CartProvider } from '../providers/cart/cart';
 import { CategoryProvider } from '../providers/category/category';
 import { OrderProvider } from '../providers/order/order';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
-
+import EditProfilePage from '../pages/edit-profile/edit-profile';
 
 firebase.initializeApp(config.firebaseConfig);
 
@@ -46,6 +46,7 @@ firebase.initializeApp(config.firebaseConfig);
 @NgModule({
   declarations: [
     MyApp
+    
   ],
   imports: [
     BrowserModule,

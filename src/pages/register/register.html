@@ -4,26 +4,31 @@
       <h2 text-center>
         <img src="assets/imgs/logo.png" alt="">
       </h2>
-
-    </div>
-    <div class="middle-page">
-      <ion-row>
+ <ion-row>
         <ion-col>
           <h3 text-center color="primary">Register</h3>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <h4 color="primary">Register</h4>
-        </ion-col>
-      </ion-row>
-      <ion-list>
+    </div>
+    <div class="middle-page">
+     <ion-list>
         <form class="list-form" novalidate (ngSubmit)="register()" [formGroup]="signupform">
+          <ion-item>
+            <ion-label floating>Profile Picture</ion-label>
+            <ion-input type="file" [(ngModel)]="pic" formControlName="pic"></ion-input>
+          </ion-item>
           <ion-item class="username">
             <ion-input type="text" [(ngModel)]="name" placeholder="Full Name" formControlName="name"></ion-input>
           </ion-item>
           <ion-item>
             <ion-input type="text" [(ngModel)]="address" placeholder="Address" formControlName="address"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select [(ngModel)]="trade" placeholder="Trade Center" formControlName="trade">
+              <ion-option value="nuwara">Nuwara Eliya</ion-option>
+              <ion-option value="colombo">Colombo</ion-option>
+              <ion-option value="dambulla">Dambulla</ion-option>
+            </ion-select>
           </ion-item>
           <ion-item>
             <ion-input type="text" [(ngModel)]="email" placeholder="Email Address" formControlName="email"
