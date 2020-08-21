@@ -11,6 +11,7 @@ export class AuthProvider {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then(() => {
         resolve(true);
+        // this.updateuser();
       }).catch((err) => {
         reject(err);
       })
@@ -19,6 +20,17 @@ export class AuthProvider {
     return promise;
   }
 
+  updateuser() {
+    var user = firebase.auth().currentUser.uid;
+
+    this.firedata.child(user).update({
+      parentBisId: 'admin@agrocropes.lk',
+    }).then(function () {
+      // Update successful.
+    }).catch(function (error) {
+      // An error happened.
+    });
+  }
   registerUser(userObj: any) {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
