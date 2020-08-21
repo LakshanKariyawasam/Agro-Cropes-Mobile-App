@@ -23,22 +23,38 @@ export class AuthProvider {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
         .then(() => {
-          this.firedata.child(firebase.auth().currentUser.uid).set({
-            name: userObj.name,
-            address: userObj.address,
-            email: userObj.email,
-            mobile: userObj.mobile
-          }).then(() => {
-            resolve({ success: true });
-          }).catch((err) => {
-            reject(err);
-          })
-          // resolve(true);
+
+          this.SendVerificationMail();
+
+          // this.firedata.child(firebase.auth().currentUser.uid).set({
+          //   name: userObj.name,
+          //   address: userObj.address,
+          //   email: userObj.email,
+          //   mobile: userObj.mobile
+          // }).then(() => {
+          //   resolve({ success: true });
+          // }).catch((err) => {
+          //   reject(err);
+          // })
+          resolve(true);
         })
         .catch(err => {
           reject(err);
         });
     })
+    return promise;
+  }
+
+  // Send email verfificaiton when new user sign up
+  SendVerificationMail() {
+    var promise = new Promise((resolve, reject) => {
+      firebase.auth().currentUser.sendEmailVerification().then(() => {
+        resolve(true);
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+
     return promise;
   }
 
