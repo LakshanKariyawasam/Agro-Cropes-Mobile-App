@@ -5,15 +5,15 @@ import firebase from "firebase";
 @Injectable()
 export class AuthProvider {
   firedata = firebase.database().ref('/customers');
-  constructor(public events: Events) {}
+  constructor(public events: Events) { }
 
-  login(loginParams){
+  login(loginParams) {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then(() => {
         resolve(true);
       }).catch((err) => {
         reject(err);
-       })
+      })
     })
 
     return promise;
@@ -21,20 +21,20 @@ export class AuthProvider {
 
   registerUser(userObj: any) {
     var promise = new Promise((resolve, reject) => {
-      firebase .auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
+      firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
         .then(() => {
           this.firedata.child(firebase.auth().currentUser.uid).set({
-            name:userObj.name,
-            address:userObj.address,
-            email:userObj.email,
-            mobile:userObj.mobile,
-            parentBisId:userObj.parentBisId
-          }).then(()=>{
+            name: userObj.name,
+            address: userObj.address,
+            email: userObj.email,
+            mobile: userObj.mobile,
+            parentBisId: userObj.parentBisId
+          }).then(() => {
             resolve({ success: true });
-          }).catch((err)=>{
+          }).catch((err) => {
             reject(err);
           })
-         // resolve(true);
+          // resolve(true);
         })
         .catch(err => {
           reject(err);
@@ -45,12 +45,24 @@ export class AuthProvider {
 
   getuserdetails() {
     var promise = new Promise((resolve, reject) => {
-    this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
-      resolve(snapshot.val());
-    }).catch((err) => {
-      reject(err);
+      this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
+        resolve(snapshot.val());
+      }).catch((err) => {
+        reject(err);
       })
     })
+    return promise;
+  }
+
+  sendPasswordResetEmail(email) {
+    var promise = new Promise((resolve, reject) => {
+      firebase.auth().sendPasswordResetEmail(email).then(() => {
+        resolve(true);
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+
     return promise;
   }
 }

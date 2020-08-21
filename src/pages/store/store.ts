@@ -38,13 +38,13 @@ export class StorePage {
     private loadingCtrl: LoadingController,
     private events: Events, private nativePageTransitions: NativePageTransitions,
     public navParams: NavParams, public toastCtrl: ToastController, private cartService: CartProvider) {
-      if (this.navParams.get("val") == 'Vegetables') {
-        this.loadProducts();
-      } else {
-        this.loadFruits();
-      }
+    if (this.navParams.get("val") == 'Vegetables') {
+      this.loadProducts();
+    } else {
+      this.loadFruits();
+    }
 
-      this.type = this.navParams.get("val");
+    this.type = this.navParams.get("val");
   }
 
   ionViewWillEnter() {
@@ -126,8 +126,12 @@ export class StorePage {
     // this.nativePageTransitions.slide(options);
     // this.navCtrl.push("SinglePage", { product: product });
 
-    this.selectProduct = product;
-    this.selectProduct = this.fruits;
+    if (this.type == 'Vegetables') {
+      this.selectProduct = product;
+    } else {
+      this.selectProduct = this.fruits;
+    }
+
     this.pageTop.scrollToTop();
     this.productCount = 1;
   }

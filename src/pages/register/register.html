@@ -1,40 +1,99 @@
-
 <ion-content>
   <ion-list>
-      <div class="top-page">
-        <h2  text-center>
-            <img src="assets/imgs/logo.png" alt="">
-        </h2>
-          
-      </div>
-      <div class="middle-page">
-        <ion-row>
-            <ion-col>
-            <h3 text-center color="primary">Register</h3>
-            </ion-col>
-        </ion-row>
-        <ion-item class="username">
-            <ion-input type="text" [(ngModel)]="name"  placeholder="Full Name"></ion-input>
+    <div class="top-page">
+      <h2 text-center>
+        <img src="assets/imgs/logo.png" alt="">
+      </h2>
+
+    </div>
+    <div class="middle-page">
+      <ion-row>
+        <ion-col>
+          <h3 text-center color="primary">Register</h3>
+        </ion-col>
+      </ion-row>
+      <ion-list>
+        <form class="list-form" novalidate (ngSubmit)="register()" [formGroup]="signupform">
+          <ion-item class="username">
+            <ion-input type="text" [(ngModel)]="name" placeholder="Full Name" formControlName="name"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-input type="text" [(ngModel)]="address"  placeholder="Address"></ion-input>
-            </ion-item>
-          <ion-item>
-            <ion-input type="text" [(ngModel)]="email"  placeholder="Email Address"></ion-input>
+            <ion-input type="text" [(ngModel)]="address" placeholder="Address" formControlName="address"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" [(ngModel)]="mobile"  placeholder="Mobile Number (9477....)"></ion-input>
+            <ion-input type="text" [(ngModel)]="email" placeholder="Email Address" formControlName="email"
+              [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty"></ion-input>
           </ion-item>
+          <ion-item no-lines
+            *ngIf="( signupform.get('email').hasError('minlength') || signupform.get('email').hasError('maxlength') ||signupform.get('email').hasError('pattern') ||signupform.get('email').hasError('required') ) && signupform.get('email').touched">
+            <div class="error" *ngIf="signupform.get('email').hasError('required') && signupform.get('email').touched">
+              Please input your email
+            </div>
+            <div class="error" *ngIf="signupform.get('email').hasError('minlength') && signupform.get('email').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error" *ngIf="signupform.get('email').hasError('maxlength') && signupform.get('email').touched">
+              Maximum 15 characters
+            </div>
+            <div class="error" *ngIf="signupform.get('email').hasError('pattern') && signupform.get('email').touched">
+              Just use valid pattern
+            </div>
+          </ion-item>
+
           <ion-item>
-            <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+            <ion-input type="text" [(ngModel)]="mobile" placeholder="Mobile Number (9477....)" formControlName="mobile"
+              [class.error1]="!signupform.controls.mobile.valid && signupform.controls.mobile.dirty"></ion-input>
           </ion-item>
-        
-        
-        
-          <button ion-button full (click)="register()"  color="primary">Register</button>  
-          <button ion-button clear class="text-white" (click)="showLoginPage()" style="float: right;margin-top: 0;text-align: right" href="#">Sign In</button>
-          
-      </div>
-    
-    </ion-list>
+          <ion-item no-lines
+            *ngIf="( signupform.get('mobile').hasError('minlength') || signupform.get('mobile').hasError('maxlength') ||signupform.get('mobile').hasError('pattern') ||signupform.get('mobile').hasError('required') ) && signupform.get('mobile').touched">
+            <div class="error"
+              *ngIf="signupform.get('mobile').hasError('required') && signupform.get('mobile').touched">
+              Please input your mobile
+            </div>
+            <div class="error"
+              *ngIf="signupform.get('mobile').hasError('minlength') && signupform.get('mobile').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="signupform.get('mobile').hasError('maxlength') && signupform.get('mobile').touched">
+              Maximum 15 characters
+            </div>
+            <div class="error" *ngIf="signupform.get('mobile').hasError('pattern') && signupform.get('mobile').touched">
+              Just use valid pattern
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="password" [(ngModel)]="password" placeholder="Password" formControlName="password"
+              [class.error1]="!signupform.controls.password.valid && signupform.controls.password.dirty"></ion-input>
+          </ion-item>
+          <ion-item no-lines
+            *ngIf="( signupform.get('password').hasError('minlength') || signupform.get('password').hasError('maxlength') ||signupform.get('password').hasError('required') ) && signupform.get('password').touched">
+            <div class="error"
+              *ngIf="signupform.get('password').hasError('required') && signupform.get('password').touched">
+              Please input your password
+            </div>
+            <div class="error"
+              *ngIf="signupform.get('password').hasError('minlength') && signupform.get('password').touched">
+              Minimum 6 characters
+            </div>
+            <div class="error"
+              *ngIf="signupform.get('password').hasError('maxlength') && signupform.get('password').touched">
+              Maximum 12 characters
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <button type="submit" ion-button block color="primary" [disabled]="signupform.invalid">Register</button>
+          </ion-item>
+        </form>
+      </ion-list>
+
+      <!-- <button ion-button full (click)="register()" color="primary">Register</button> -->
+      <button ion-button clear class="text-white" (click)="showLoginPage()"
+        style="float: right;margin-top: 0;text-align: right" href="#">Sign In</button>
+
+    </div>
+
+  </ion-list>
 </ion-content>
