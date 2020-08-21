@@ -11,12 +11,10 @@
           </ion-col>
           <ion-col padding-top col-8>
             <h2 ion-text class="no-margin bold text-white">
-              <ion-item *ngFor="let employee of employeeList" (click)="goToEmployeeDetail(employee.id)">
-                <h2>{{employee?.name}}</h2>  
-              </ion-item>
-               </h2>
+              {{name}}
+            </h2>
             <ion-icon style="zoom:1.2; margin-left: -0.2em; margin-top: 1em; color: gold" name="star" item-left>
-            </ion-icon><span ion-text color="light">Gold Member</span>
+            </ion-icon><span ion-text color="max">Gold Member</span>
           </ion-col>
         </ion-row>
 
@@ -31,7 +29,7 @@
             <button ion-button icon-left small full color="light" menuClose (click)="logout()">
               <ion-icon name="log-out"></ion-icon>
               Log Out
-              </button>
+            </button>
           </ion-col>
         </ion-row>
 

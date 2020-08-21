@@ -11,7 +11,7 @@ export class TabsPage {
   tab1Root: any = 'HomePage';
   tab2Root: any = 'CartPage';
   tab3Root: any = 'NotificationsPage';
-  tab4Root: any = '';
+  tab4Root: any = 'EditProfilePage';
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {

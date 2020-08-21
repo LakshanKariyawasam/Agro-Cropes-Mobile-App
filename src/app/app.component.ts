@@ -28,7 +28,7 @@ export class MyApp {
 
   appMenuItems: Array<MenuItem>;
   categories: any[];
-  employeeList: any[];
+  name: any;
 
   constructor(
     public platform: Platform,
@@ -40,6 +40,10 @@ export class MyApp {
     public adminProvider: AuthProvider,
   ) {
 
+
+    this.name = JSON.parse(window.localStorage.getItem('user')).name;
+    console.log("name ::: ", this.name)
+
     // Check if the user has already seen the tutorial
     this.userData.checkHasSeenTutorial().then((hasSeenTutorial) => {
       if (hasSeenTutorial === null) {
@@ -50,7 +54,7 @@ export class MyApp {
         this.rootPage = 'LoginPage';
       }
     });
-    
+
     this.initializeApp();
 
     this.appMenuItems = [
@@ -67,7 +71,7 @@ export class MyApp {
     ];
 
     this.getCategories();
-    
+
   }
 
   initializeApp() {
@@ -94,7 +98,7 @@ export class MyApp {
       this.categories = this.categoryService.categories;
 
     })
-  } 
+  }
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -102,7 +106,7 @@ export class MyApp {
     this.nav.push(page.component);
   }
 
-  contact(){
+  contact() {
     this.nav.push(EditProfilePage);
   }
   logout() {
