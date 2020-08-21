@@ -1,15 +1,30 @@
 import { Injectable } from "@angular/core";
 import { Events } from "ionic-angular";
 import firebase from "firebase";
-
+import { Reference, ThenableReference } from 'firebase/database';
 @Injectable()
 export class AuthProvider {
+ 
   firedata = firebase.database().ref('/customers');
-  constructor(public events: Events) { }
-
+  public employeeListRef: Reference;
+  authState: any;
+  constructor(public events: Events) {firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      this.employeeListRef = firebase.database().ref(`customers`);
+     
+    }
+  });
+}
+getEmployeeList(): Reference {
+  return this.employeeListRef;
+}
+getEmployeeDetail(userId: string): Reference {
+  return this.employeeListRef.child(userId);
+}
   login(loginParams) {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then(() => {
+        this.getuserdetails();
         resolve(true);
         // this.updateuser();
       }).catch((err) => {
@@ -41,6 +56,7 @@ export class AuthProvider {
           // this.firedata.child(firebase.auth().currentUser.uid).set({
           //   name: userObj.name,
           //   address: userObj.address,
+          //   trade: userObj.trade,
           //   email: userObj.email,
           //   mobile: userObj.mobile
           // }).then(() => {
@@ -80,6 +96,7 @@ export class AuthProvider {
     })
     return promise;
   }
+  
 
   sendPasswordResetEmail(email) {
     var promise = new Promise((resolve, reject) => {

@@ -7,6 +7,9 @@ import { Keyboard } from '@ionic-native/keyboard';
 
 import { UserData } from "../providers/user-data";
 import { CategoryProvider } from "../providers/category/category";
+import { LoginPage } from "../pages/login/login";
+import { AuthProvider } from "../providers/auth/auth";
+import EditProfilePage from "../pages/edit-profile/edit-profile";
 
 export interface MenuItem {
   title: string;
@@ -20,11 +23,12 @@ export interface MenuItem {
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  email: any;
   rootPage: any;
 
   appMenuItems: Array<MenuItem>;
   categories: any[];
+  employeeList: any[];
 
   constructor(
     public platform: Platform,
@@ -32,7 +36,8 @@ export class MyApp {
     public userData: UserData,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard, private categoryService: CategoryProvider,
-    private events: Events
+    private events: Events,
+    public adminProvider: AuthProvider,
   ) {
 
     // Check if the user has already seen the tutorial
@@ -45,7 +50,7 @@ export class MyApp {
         this.rootPage = 'LoginPage';
       }
     });
-
+    
     this.initializeApp();
 
     this.appMenuItems = [
@@ -62,6 +67,7 @@ export class MyApp {
     ];
 
     this.getCategories();
+    
   }
 
   initializeApp() {
@@ -88,7 +94,7 @@ export class MyApp {
       this.categories = this.categoryService.categories;
 
     })
-  }
+  } 
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -96,8 +102,12 @@ export class MyApp {
     this.nav.push(page.component);
   }
 
+  contact(){
+    this.nav.push(EditProfilePage);
+  }
   logout() {
-    this.nav.setRoot('LoginPage');
+    this.userData.logout();
+    this.nav.setRoot(LoginPage);
   }
 
 }
