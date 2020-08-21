@@ -9,9 +9,9 @@ import { UserData } from "../providers/user-data";
 import { CategoryProvider } from "../providers/category/category";
 
 export interface MenuItem {
-    title: string;
-    component: any;
-    icon: string;
+  title: string;
+  component: any;
+  icon: string;
 }
 
 @Component({
@@ -24,17 +24,17 @@ export class MyApp {
   rootPage: any;
 
   appMenuItems: Array<MenuItem>;
-  categories:any[];
+  categories: any[];
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public userData: UserData,
     public splashScreen: SplashScreen,
-    public keyboard: Keyboard,private categoryService:CategoryProvider,
-    private events:Events
+    public keyboard: Keyboard, private categoryService: CategoryProvider,
+    private events: Events
   ) {
-    
+
     // Check if the user has already seen the tutorial
     this.userData.checkHasSeenTutorial().then((hasSeenTutorial) => {
       if (hasSeenTutorial === null) {
@@ -45,20 +45,20 @@ export class MyApp {
         this.rootPage = 'LoginPage';
       }
     });
-    
+
     this.initializeApp();
 
     this.appMenuItems = [
-      {title: 'Home', component: 'TabsPage', icon: 'home'},
+      { title: 'Home', component: 'TabsPage', icon: 'home' },
       // {title: 'Bookings', component: HomePage, icon: 'bookmark'},
       // {title: 'Deals', component: HomePage, icon: 'bookmark'},
       // {title: 'Next Trips', component: HomePage, icon: 'map'},
       // {title: 'Your Contributions', component: HomePage, icon: 'bookmark'},
       // {title: 'Travel Articales', component: HomePage, icon: 'paper'},
-      {title: 'Store', component: 'StorePage', icon: 'ios-archive'},
-      {title: 'Settings', component: 'SettingsPage', icon: 'ios-settings'},
-      {title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer'},
-      {title: 'About Us', component: 'HomePage', icon: 'ios-information-circle'},
+      { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
+      { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
+      { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+      { title: 'About Us', component: 'HomePage', icon: 'ios-information-circle' },
     ];
 
     this.getCategories();
@@ -80,20 +80,20 @@ export class MyApp {
       this.keyboard.disableScroll(true);
     });
   }
-  
-  getCategories(){
+
+  getCategories() {
     this.categoryService.getCategories();
 
     this.events.subscribe('categoryLoaded', () => {
       this.categories = this.categoryService.categories;
-      
+
     })
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
   }
 
   logout() {

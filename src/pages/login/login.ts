@@ -43,6 +43,10 @@ export class LoginPage implements OnInit {
 
     this.authService.login(loginParams).then((res) => {
       loader.dismiss();
+      this.authService.getuserdetails().then((res) => {
+        console.log("userdetails:: ", res)
+        window.localStorage.setItem('user', JSON.stringify(res));
+      })
       this.nav.setRoot('TabsPage', { tabIndex: 0 });
     }).catch((err) => {
       loader.dismiss();
