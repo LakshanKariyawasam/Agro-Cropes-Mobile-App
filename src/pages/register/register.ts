@@ -45,8 +45,7 @@ export class RegisterPage {
       address: this.address,
       email: this.email,
       mobile: this.mobile,
-      password: this.password,
-      parentBisId: 520
+      password: this.password
     };
 
     this.AuthService.registerUser(userObj)

@@ -27,8 +27,7 @@ export class AuthProvider {
             name: userObj.name,
             address: userObj.address,
             email: userObj.email,
-            mobile: userObj.mobile,
-            parentBisId: userObj.parentBisId
+            mobile: userObj.mobile
           }).then(() => {
             resolve({ success: true });
           }).catch((err) => {
