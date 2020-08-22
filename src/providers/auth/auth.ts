@@ -1,30 +1,33 @@
 import { Injectable } from "@angular/core";
-import { Events } from "ionic-angular";
 import firebase from "firebase";
-import { Reference, ThenableReference } from 'firebase/database';
+import { Events } from "ionic-angular";
+
 @Injectable()
 export class AuthProvider {
- 
+
   firedata = firebase.database().ref('/customers');
-  public employeeListRef: Reference;
-  authState: any;
-  constructor(public events: Events) {firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      this.employeeListRef = firebase.database().ref(`customers`);
-     
-    }
-  });
-}
-getEmployeeList(): Reference {
-  return this.employeeListRef;
-}
-getEmployeeDetail(userId: string): Reference {
-  return this.employeeListRef.child(userId);
-}
+  // public employeeListRef: Reference;
+  // authState: any;
+  constructor(public events: Events) {
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     this.employeeListRef = firebase.database().ref(`customers`);
+
+    //   }
+    // });
+  }
+
+  // getEmployeeList(): Reference {
+  //   return this.employeeListRef;
+  // }
+
+  // getEmployeeDetail(userId: string): Reference {
+  //   return this.employeeListRef.child(userId);
+  // }
+
   login(loginParams) {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then(() => {
-        this.getuserdetails();
         resolve(true);
         // this.updateuser();
       }).catch((err) => {
@@ -46,6 +49,7 @@ getEmployeeDetail(userId: string): Reference {
       // An error happened.
     });
   }
+
   registerUser(userObj: any) {
     var promise = new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
@@ -53,17 +57,19 @@ getEmployeeDetail(userId: string): Reference {
 
           this.SendVerificationMail();
 
-          // this.firedata.child(firebase.auth().currentUser.uid).set({
-          //   name: userObj.name,
-          //   address: userObj.address,
-          //   trade: userObj.trade,
-          //   email: userObj.email,
-          //   mobile: userObj.mobile
-          // }).then(() => {
-          //   resolve({ success: true });
-          // }).catch((err) => {
-          //   reject(err);
-          // })
+          this.firedata.child(firebase.auth().currentUser.uid).set({
+            name: userObj.name,
+            address: userObj.address,
+            // trade: userObj.trade,
+            email: userObj.email,
+            mobile: userObj.mobile,
+            bisTypeId: userObj.bisTypeId,
+            parentBisId: userObj.parentBisId
+          }).then(() => {
+            resolve({ success: true });
+          }).catch((err) => {
+            reject(err);
+          })
           resolve(true);
         })
         .catch(err => {
@@ -96,7 +102,7 @@ getEmployeeDetail(userId: string): Reference {
     })
     return promise;
   }
-  
+
 
   sendPasswordResetEmail(email) {
     var promise = new Promise((resolve, reject) => {

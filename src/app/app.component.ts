@@ -5,11 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
 
-import { UserData } from "../providers/user-data";
+import { UserData } from "../providers/user/user-data";
 import { CategoryProvider } from "../providers/category/category";
-import { LoginPage } from "../pages/login/login";
 import { AuthProvider } from "../providers/auth/auth";
-import EditProfilePage from "../pages/edit-profile/edit-profile";
 
 export interface MenuItem {
   title: string;
@@ -29,6 +27,7 @@ export class MyApp {
   appMenuItems: Array<MenuItem>;
   categories: any[];
   name: any;
+  bisTypeId: any;
 
   constructor(
     public platform: Platform,
@@ -39,11 +38,6 @@ export class MyApp {
     private events: Events,
     public adminProvider: AuthProvider,
   ) {
-
-
-    this.name = JSON.parse(window.localStorage.getItem('user')).name;
-    console.log("name ::: ", this.name)
-
     // Check if the user has already seen the tutorial
     this.userData.checkHasSeenTutorial().then((hasSeenTutorial) => {
       if (hasSeenTutorial === null) {
@@ -57,20 +51,31 @@ export class MyApp {
 
     this.initializeApp();
 
-    this.appMenuItems = [
-      { title: 'Home', component: 'TabsPage', icon: 'home' },
-      // {title: 'Bookings', component: HomePage, icon: 'bookmark'},
-      // {title: 'Deals', component: HomePage, icon: 'bookmark'},
-      // {title: 'Next Trips', component: HomePage, icon: 'map'},
-      // {title: 'Your Contributions', component: HomePage, icon: 'bookmark'},
-      // {title: 'Travel Articales', component: HomePage, icon: 'paper'},
-      { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
-      { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
-      { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
-      { title: 'About Us', component: 'HomePage', icon: 'ios-information-circle' },
-    ];
-
     this.getCategories();
+
+    this.events.subscribe('user:login', () => {
+      this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+
+      this.name = JSON.parse(window.localStorage.getItem('user')).name;
+
+      if (this.bisTypeId != 2) {
+        this.appMenuItems = [
+          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
+          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
+          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
+        ];
+      } else {
+        this.appMenuItems = [
+          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          { title: 'Store', component: 'HomePage', icon: 'ios-archive' },
+          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
+          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
+        ];
+      }
+    });
 
   }
 
@@ -106,12 +111,13 @@ export class MyApp {
     this.nav.push(page.component);
   }
 
-  contact() {
-    this.nav.push(EditProfilePage);
+  profile() {
+    this.nav.push('EditProfilePage');
   }
+
   logout() {
     this.userData.logout();
-    this.nav.setRoot(LoginPage);
+    this.nav.setRoot('LoginPage');
   }
 
 }

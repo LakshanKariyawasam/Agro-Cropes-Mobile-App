@@ -23,7 +23,7 @@ import { CartProvider } from '../providers/cart/cart';
 import { CategoryProvider } from '../providers/category/category';
 import { OrderProvider } from '../providers/order/order';
 import { ProductsProvider } from '../providers/products/products';
-import { UserData } from '../providers/user-data';
+import { UserData } from '../providers/user/user-data';
 import { ActivityService } from "../services/activity-service";
 import { TripService } from "../services/trip-service";
 import { WeatherProvider } from "../services/weather";
@@ -49,7 +49,7 @@ firebase.initializeApp(config.firebaseConfig);
 @NgModule({
   declarations: [
     MyApp
-    
+
   ],
   imports: [
     BrowserModule,
@@ -89,8 +89,7 @@ firebase.initializeApp(config.firebaseConfig);
     AuthProvider,
     CartProvider,
     CategoryProvider,
-    OrderProvider,
-    
+    OrderProvider
   ]
 })
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavParams, IonicPage } from 'ionic-angular';
+import { NavParams, IonicPage, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,14 +8,31 @@ import { NavParams, IonicPage } from 'ionic-angular';
 })
 export class TabsPage {
   // set the root pages for each tab
-  tab1Root: any = 'HomePage';
-  tab2Root: any = 'CartPage';
-  tab3Root: any = 'NotificationsPage';
-  tab4Root: any = 'EditProfilePage';
-  mySelectedIndex: number;
+  tab1Root: any;
+  tab2Root: any;
+  tab3Root: any;
 
-  constructor(navParams: NavParams) {
-    this.mySelectedIndex = navParams.data.tabIndex || 0;
+  mySelectedIndex: number;
+  bisTypeId: any;
+
+  constructor(public events: Events, navParams: NavParams) {
+    this.events.publish('user:login');
+    this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+    console.log("userdetails 123:: ", this.bisTypeId)
+
+    if (this.bisTypeId == 2) {
+      this.mySelectedIndex = navParams.data.tabIndex || 0;
+
+      this.tab1Root = 'DashboardPage';
+      this.tab2Root = 'CartPage';
+      this.tab3Root = 'NotificationsPage';
+    } else {
+      this.mySelectedIndex = navParams.data.tabIndex || 0;
+
+      this.tab1Root = 'HomePage';
+      this.tab2Root = 'CartPage';
+      this.tab3Root = 'NotificationsPage';
+    }
   }
 
 }

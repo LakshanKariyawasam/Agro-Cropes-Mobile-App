@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController } from "ionic-angular";
-import { UserData } from "../../providers/user-data";
+import { UserData } from "../../providers/user/user-data";
 import { AuthProvider } from "../../providers/auth/auth";
 
 @IonicPage()
@@ -44,10 +44,9 @@ export class LoginPage implements OnInit {
     this.authService.login(loginParams).then((res) => {
       loader.dismiss();
       this.authService.getuserdetails().then((res) => {
-        console.log("userdetails:: ", res)
         window.localStorage.setItem('user', JSON.stringify(res));
+        this.nav.setRoot('TabsPage', { tabIndex: 0 });
       })
-      this.nav.setRoot('TabsPage', { tabIndex: 0 });
     }).catch((err) => {
       loader.dismiss();
       this.presentAlert(err.message);

@@ -23,13 +23,13 @@
           <ion-item>
             <ion-input type="text" [(ngModel)]="address" placeholder="Address" formControlName="address"></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-select [(ngModel)]="trade" placeholder="Trade Center" formControlName="trade">
               <ion-option value="nuwara">Nuwara Eliya</ion-option>
               <ion-option value="colombo">Colombo</ion-option>
               <ion-option value="dambulla">Dambulla</ion-option>
             </ion-select>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-input type="text" [(ngModel)]="email" placeholder="Email Address" formControlName="email"
               [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty"></ion-input>

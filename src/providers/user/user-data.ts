@@ -41,6 +41,7 @@ export class UserData {
 
   logout() {
     this.storage.remove(this.HAS_LOGGED_IN);
+    window.localStorage.removeItem('user');
     this.storage.remove('username');
     this.events.publish('user:logout');
   };
@@ -54,7 +55,7 @@ export class UserData {
       return value;
     });
   }
-  getuserdetails(){
+  getuserdetails() {
     return this.storage.get('username').then((value) => {
       return value;
     });

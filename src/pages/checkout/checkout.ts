@@ -1,13 +1,8 @@
-import { Component, ViewChild } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  LoadingController
-} from "ionic-angular";
+import { Component } from "@angular/core";
 import firebase from "firebase";
-import { CartProvider } from "../../providers/cart/cart";
+import { IonicPage, LoadingController, NavController, NavParams } from "ionic-angular";
 import { AuthProvider } from "../../providers/auth/auth";
+import { CartProvider } from "../../providers/cart/cart";
 import { OrderProvider } from "../../providers/order/order";
 
 
@@ -88,7 +83,7 @@ export class CheckoutPage {
         name: this.customerName,
         count: this.totalCnt,
         orders: this.cartItems,
-        date:this.selectdate
+        date: this.selectdate
       };
 
       this.orderService.placeOrder(orderObj).then(() => {
