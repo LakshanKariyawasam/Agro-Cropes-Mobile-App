@@ -80,7 +80,7 @@ export class StorePage {
 
   loadProducts() {
     let loader = this.loadingCtrl.create({
-      content: 'Loading Promos..'
+      content: 'Loading Vegitables..'
     });
     loader.present();
     this.productService.getProducts();
@@ -94,7 +94,7 @@ export class StorePage {
 
   loadFruits() {
     let loader = this.loadingCtrl.create({
-      content: 'Loading Promos..'
+      content: 'Loading Fruits..'
     });
     loader.present();
     this.productService.getProductss();
@@ -104,6 +104,8 @@ export class StorePage {
       this.selectProduct = this.fruits[0];
       loader.dismiss();
     })
+
+    console.log("fruits :: ", this.fruits)
   }
 
   logRatingChange(rating) {
@@ -129,7 +131,7 @@ export class StorePage {
     if (this.type == 'Vegetables') {
       this.selectProduct = product;
     } else {
-      this.selectProduct = this.fruits;
+      this.selectProduct = product;
     }
 
     this.pageTop.scrollToTop();

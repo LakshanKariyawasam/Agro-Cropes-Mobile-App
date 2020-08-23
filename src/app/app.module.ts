@@ -23,12 +23,13 @@ import { CartProvider } from '../providers/cart/cart';
 import { CategoryProvider } from '../providers/category/category';
 import { OrderProvider } from '../providers/order/order';
 import { ProductsProvider } from '../providers/products/products';
-import { UserData } from '../providers/user/user-data';
+import { UserData } from '../providers/user-data';
 import { ActivityService } from "../services/activity-service";
 import { TripService } from "../services/trip-service";
 import { WeatherProvider } from "../services/weather";
 import { config } from './../config/app.config';
 import { MyApp } from "./app.component";
+import { UserProvider } from '../providers/user/user';
 
 
 
@@ -89,7 +90,8 @@ firebase.initializeApp(config.firebaseConfig);
     AuthProvider,
     CartProvider,
     CategoryProvider,
-    OrderProvider
+    OrderProvider,
+    UserProvider
   ]
 })
 

@@ -18,21 +18,19 @@ export class TabsPage {
   constructor(public events: Events, navParams: NavParams) {
     this.events.publish('user:login');
     this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
-    console.log("userdetails 123:: ", this.bisTypeId)
 
     if (this.bisTypeId == 2) {
       this.mySelectedIndex = navParams.data.tabIndex || 0;
 
       this.tab1Root = 'DashboardPage';
-      this.tab2Root = 'CartPage';
-      this.tab3Root = 'NotificationsPage';
+      this.tab2Root = 'OrdersPage';
+      this.tab3Root = 'CartPage';
+
     } else {
       this.mySelectedIndex = navParams.data.tabIndex || 0;
 
       this.tab1Root = 'HomePage';
       this.tab2Root = 'CartPage';
-      this.tab3Root = 'NotificationsPage';
     }
   }
-
 }

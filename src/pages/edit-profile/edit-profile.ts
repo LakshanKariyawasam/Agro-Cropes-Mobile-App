@@ -9,7 +9,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class EditProfilePage {
 
-  userData = { "address": "", "bisTypeId": "", "email": "", "mobile": "", "name": "", "parentBisId": "" }
+  userData = { "address": "", "bisTypeId": "", "email": "", "mobile": "", "name": "", "perentBisId": "" }
 
   constructor(public authProvider: AuthProvider,
     public navCtrl: NavController, public navParams: NavParams) {

@@ -55,7 +55,7 @@ export class RegisterPage {
       mobile: this.mobile,
       password: this.password,
       bisTypeId: 2,
-      parentBisId: 'Psm5CnqpX8UQ70aeWhCZwwfNnW03'
+      perentBisId: 'Psm5CnqpX8UQ70aeWhCZwwfNnW03'
     };
     var picture = this.pic;
     picURL.picture.upload(picture, "my-folder")

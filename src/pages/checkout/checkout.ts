@@ -13,7 +13,7 @@ import { OrderProvider } from "../../providers/order/order";
 })
 export class CheckoutPage {
   cartItems: any[] = [];
-  userData = { "address": "", "email": "", "mobile": "", "name": "", "parentBisId": "" }
+  userData = { "address": "", "email": "", "mobile": "", "name": "", "perentBisId": "" }
   totalCnt: number = 0;
   customerName: any;
   selectdate: string;

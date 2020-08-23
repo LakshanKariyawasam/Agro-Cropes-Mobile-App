@@ -42,7 +42,7 @@ export class AuthProvider {
     var user = firebase.auth().currentUser.uid;
 
     this.firedata.child(user).update({
-      parentBisId: 'admin@agrocropes.lk',
+      perentBisId: 'admin@agrocropes.lk',
     }).then(function () {
       // Update successful.
     }).catch(function (error) {
@@ -64,7 +64,7 @@ export class AuthProvider {
             email: userObj.email,
             mobile: userObj.mobile,
             bisTypeId: userObj.bisTypeId,
-            parentBisId: userObj.parentBisId
+            perentBisId: userObj.perentBisId
           }).then(() => {
             resolve({ success: true });
           }).catch((err) => {

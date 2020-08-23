@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController } from "ionic-angular";
-import { UserData } from "../../providers/user/user-data";
+import { UserData } from "../../providers/user-data";
 import { AuthProvider } from "../../providers/auth/auth";
 
 @IonicPage()
