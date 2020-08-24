@@ -66,6 +66,7 @@ export class ProductsProvider {
       this.events.publish('productsLoaded');
     })
   }
+
   getProductByCategoryy(categoryId) {
     this.productReff.orderByChild('category_id').equalTo(categoryId).once('value', (snap) => {
       this.fruits = [];
@@ -89,6 +90,7 @@ export class ProductsProvider {
       this.events.publish('productsLoaded');
     })
   }
+
   getProducts() {
     this.productRef.orderByChild('status').equalTo(1).once('value', (snap) => {
       console.log("In Value");
@@ -122,10 +124,9 @@ export class ProductsProvider {
       this.events.publish('productsLoaded');
     });
   }
+
   getProductss() {
     this.productReff.orderByChild('status').equalTo(1).once('value', (snap) => {
-      console.log("In Value");
-      console.log(snap);
       this.fruits = [];
       if (snap.val()) {
         var tempProducts = snap.val();
@@ -146,8 +147,7 @@ export class ProductsProvider {
             .getDownloadURL().then(function (url) {
               singleProduct.thumb = url;
             });
-          
-            console.log("singleProduct :: ", singleProduct)
+
             this.fruits.push(singleProduct);
         }
       }

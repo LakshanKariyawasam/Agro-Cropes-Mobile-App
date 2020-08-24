@@ -30,7 +30,6 @@ export class HomePage {
     this.events.unsubscribe('promoLoaded');
   }
 
-
   ionViewWillLeave() {
 
     let options: NativeTransitionOptions = {

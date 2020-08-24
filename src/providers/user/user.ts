@@ -11,6 +11,7 @@ import firebase from 'firebase';
 */
 @Injectable()
 export class UserProvider {
+  a: number;
 
   constructor(public events: Events, public http: HttpClient) {
     console.log('Hello UserProvider Provider');
@@ -21,11 +22,8 @@ export class UserProvider {
 
   customers: Array<any> = [];
 
-
   getUserListByPerentUser(perentBisId) {
     this.customerRef.orderByChild('perentBisId').equalTo(perentBisId).once('value', (snap) => {
-      console.log("In Value");
-      console.log(snap);
       this.customers = [];
       if (snap.val()) {
         var tempCustomers = snap.val();

@@ -144,4 +144,18 @@ page-tabs {
     content: "\f273";
     margin-top: 1px;
   }
+
+  .ion-tab{
+  
+    position:relative;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    }
+  
+  .ion-tab span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    }
 }

@@ -10,6 +10,7 @@ export class OrderProvider {
 
   orders: Array<any> = [];
   ordersDetails: Array<any> = [];
+  a: number;
   constructor(public events: Events) { }
 
   placeOrder(orderObj: any) {
@@ -53,12 +54,17 @@ export class OrderProvider {
     return text;
   }
 
-  clear() {
-    this.orders = [];
+  change() {
+    this.a = 1;
   }
 
   getOrderListByUser(user) {
     this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
+      if (this.a == 1) {
+        this.orders = [];
+        this.a++;
+      }
+
       if (snap.val()) {
         var tempOrders = snap.val();
         for (var key in tempOrders) {

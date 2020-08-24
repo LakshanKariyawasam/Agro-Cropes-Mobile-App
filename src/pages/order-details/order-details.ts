@@ -26,21 +26,26 @@ export class OrderDetailsPage {
   }
 
   ionViewWillEnter() {
+    this.getOrderDetails();
+  }
+
+  ionViewDidLeave() {
+    this.events.unsubscribe('orderDetailsLoaded');
+  }
+
+  getOrderDetails() {
     let loader = this.loadingCtrl.create({
       content: 'Loading orders..'
     });
     loader.present();
 
-    console.log('ionViewDidLoad OrderDetailsPage');
     this.orderService.getOrderDetailsByOrder(this.order);
     this.events.subscribe('orderDetailsLoaded', () => {
       this.ordersDetails = this.orderService.ordersDetails;
 
       loader.dismiss();
     })
-
   }
-
 
 
 }

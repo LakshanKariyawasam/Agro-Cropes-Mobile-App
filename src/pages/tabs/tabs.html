@@ -1,6 +1,7 @@
 <ion-tabs [selectedIndex]="mySelectedIndex">
-  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabIcon="cart" *ngIf="bisTypeId != 2"></ion-tab>
-  <ion-tab [root]="tab2Root" tabIcon="basket" *ngIf="bisTypeId == 2"></ion-tab>
-  <ion-tab [root]="tab3Root" tabIcon="cart" *ngIf="bisTypeId == 2"></ion-tab>
+  <ion-tab [root]="tab1Root" tabIcon="home" tabTitle="Home"></ion-tab>
+  <ion-tab [root]="tab2Root" tabIcon="cart" tabTitle="Cart" *ngIf="bisTypeId != 2"></ion-tab>
+  <ion-tab [root]="tab2Root" tabIcon="basket" tabTitle="Orders" [tabBadge]="count1" tabBadgeStyle="danger"
+    *ngIf="bisTypeId == 2"></ion-tab>
+  <ion-tab [root]="tab3Root" tabIcon="cart" tabTitle="Cart" *ngIf="bisTypeId == 2"></ion-tab>
 </ion-tabs>

@@ -33,21 +33,30 @@ export class OrdersPage {
     this.getorders();
   }
 
+  ionViewDidLeave() {
+    this.events.unsubscribe('customersLoaded');
+    this.events.unsubscribe('orderLoaded');
+  }
+
+  ionViewWillLeave() {
+
+  }
 
   getorders() {
     let loader = this.loadingCtrl.create({
       content: 'Loading orders..'
     });
     loader.present();
+
+    this.orderService.change();
+
     this.userService.getUserListByPerentUser(this.userId);
     this.events.subscribe('customersLoaded', () => {
       this.customers = this.userService.customers;
-      this.orderService.clear();
       this.customers.forEach(element => {
         this.orderService.getOrderListByUser(element);
         this.events.subscribe('orderLoaded', () => {
           this.orders = this.orderService.orders;
-
           loader.dismiss();
         })
       });
