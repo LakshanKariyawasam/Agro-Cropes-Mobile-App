@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController } from "ionic-angular";
+import { IonicPage, NavController, MenuController } from "ionic-angular";
 import { AuthProvider } from "../../providers/auth/auth";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 
 @IonicPage()
@@ -8,28 +9,62 @@ import { AuthProvider } from "../../providers/auth/auth";
   selector: "page-register",
   templateUrl: "register.html"
 })
+
 export class RegisterPage {
+  signupform: FormGroup;
+  pic: any;
   name: any;
   address: any;
+  trade: any;
   email: any;
   mobile: any;
   password: any;
   constructor(
     public navCtrl: NavController,
-    public AuthService: AuthProvider
-  ) {}
+    public AuthService: AuthProvider,
+    public menu: MenuController
+  ) {
+    this.menu.swipeEnable(false);
+  }
 
-  ionViewDidLoad() {}
+  ngOnInit() {
+    //let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    //  let password = this.signupform.get('password').value;
+    //  let username = this.signupform.get('username').value;
+    this.signupform = new FormGroup({
+      pic: new FormControl(),
+      name: new FormControl(),
+      address: new FormControl(),
+      // trade: new FormControl(),
+      email: new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), Validators.minLength(4), Validators.maxLength(15)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
+      mobile: new FormControl(),
+      // mobile: new FormControl('', [Validators.required, Validators.pattern(/^([9]{1})([234789]{1})([0-9]{8})$/), Validators.minLength(11), Validators.maxLength(11)])
+    });
+  }
+
+  ionViewDidLoad() { }
 
   register() {
+    var picURL;
     var userObj = {
       name: this.name,
       address: this.address,
+      // trade:this.trade,
       email: this.email,
       mobile: this.mobile,
       password: this.password,
-      parentBisId: 520
+      bisTypeId: 2,
+      perentBisId: 'Psm5CnqpX8UQ70aeWhCZwwfNnW03'
     };
+    var picture = this.pic;
+    picURL.picture.upload(picture, "my-folder")
+      .then(function (fileURL) {
+        console.log("File successfully uploaded. Path to download: " + fileURL.fileURL);
+        picURL = fileURL.fileURL;
+      })
+    picURL.picture = picURL;
+
 
     this.AuthService.registerUser(userObj)
       .then((response: any) => {

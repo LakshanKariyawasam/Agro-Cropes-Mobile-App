@@ -7,11 +7,12 @@ import { Keyboard } from '@ionic-native/keyboard';
 
 import { UserData } from "../providers/user-data";
 import { CategoryProvider } from "../providers/category/category";
+import { AuthProvider } from "../providers/auth/auth";
 
 export interface MenuItem {
-    title: string;
-    component: any;
-    icon: string;
+  title: string;
+  component: any;
+  icon: string;
 }
 
 @Component({
@@ -20,21 +21,23 @@ export interface MenuItem {
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  email: any;
   rootPage: any;
 
   appMenuItems: Array<MenuItem>;
-  categories:any[];
+  categories: any[];
+  name: any;
+  bisTypeId: any;
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public userData: UserData,
     public splashScreen: SplashScreen,
-    public keyboard: Keyboard,private categoryService:CategoryProvider,
-    private events:Events
+    public keyboard: Keyboard, private categoryService: CategoryProvider,
+    private events: Events,
+    public adminProvider: AuthProvider,
   ) {
-    
     // Check if the user has already seen the tutorial
     this.userData.checkHasSeenTutorial().then((hasSeenTutorial) => {
       if (hasSeenTutorial === null) {
@@ -45,23 +48,35 @@ export class MyApp {
         this.rootPage = 'LoginPage';
       }
     });
-    
+
     this.initializeApp();
 
-    this.appMenuItems = [
-      {title: 'Home', component: 'TabsPage', icon: 'home'},
-      // {title: 'Bookings', component: HomePage, icon: 'bookmark'},
-      // {title: 'Deals', component: HomePage, icon: 'bookmark'},
-      // {title: 'Next Trips', component: HomePage, icon: 'map'},
-      // {title: 'Your Contributions', component: HomePage, icon: 'bookmark'},
-      // {title: 'Travel Articales', component: HomePage, icon: 'paper'},
-      {title: 'Store', component: 'StorePage', icon: 'ios-archive'},
-      {title: 'Settings', component: 'SettingsPage', icon: 'ios-settings'},
-      {title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer'},
-      {title: 'About Us', component: 'HomePage', icon: 'ios-information-circle'},
-    ];
-
     this.getCategories();
+
+    this.events.subscribe('user:login', () => {
+      this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+
+      this.name = JSON.parse(window.localStorage.getItem('user')).name;
+
+      if (this.bisTypeId != 2) {
+        this.appMenuItems = [
+          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
+          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
+          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
+        ];
+      } else {
+        this.appMenuItems = [
+          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          { title: 'Store', component: 'HomePage', icon: 'ios-archive' },
+          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
+          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
+        ];
+      }
+    });
+
   }
 
   initializeApp() {
@@ -80,23 +95,28 @@ export class MyApp {
       this.keyboard.disableScroll(true);
     });
   }
-  
-  getCategories(){
+
+  getCategories() {
     this.categoryService.getCategories();
 
     this.events.subscribe('categoryLoaded', () => {
       this.categories = this.categoryService.categories;
-      
+
     })
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
+  }
+
+  profile() {
+    this.nav.push('EditProfilePage');
   }
 
   logout() {
+    this.userData.logout();
     this.nav.setRoot('LoginPage');
   }
 

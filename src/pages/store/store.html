@@ -72,6 +72,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  
   <ion-grid>
     <ion-row *ngFor="let i of fruitsRows">
       <ion-col *ngFor="let fruit of fruits | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(fruit)">

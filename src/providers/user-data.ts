@@ -41,6 +41,7 @@ export class UserData {
 
   logout() {
     this.storage.remove(this.HAS_LOGGED_IN);
+    window.localStorage.removeItem('user');
     this.storage.remove('username');
     this.events.publish('user:logout');
   };
@@ -50,21 +51,25 @@ export class UserData {
   };
 
   getUsername() {
-    this.storage.get('username').then((username) => {
-      return username;
+    return this.storage.get('username').then((value) => {
+      return value;
     });
-  };
-
+  }
+  getuserdetails() {
+    return this.storage.get('username').then((value) => {
+      return value;
+    });
+  }
   // return a promise
   hasLoggedIn() {
     return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
       return value === true;
     });
-  };
+  }
 
   checkHasSeenTutorial() {
     return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
       return value;
-    })
-  };
+    });
+  }
 }

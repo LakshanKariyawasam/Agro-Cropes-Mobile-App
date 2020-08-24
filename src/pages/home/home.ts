@@ -11,12 +11,15 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
 })
 export class HomePage {
 
+  bisTypeId: any;
   promoSliders: any[];
   promoImagesLoaded: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private productService: ProductsProvider,
     private loadingCtrl: LoadingController,
     private events: Events, private nativePageTransitions: NativePageTransitions) {
+    this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+    console.log("bisTypeId ::: ", this.bisTypeId)
   }
 
   ionViewWillEnter() {
@@ -26,7 +29,6 @@ export class HomePage {
   ionViewDidLeave() {
     this.events.unsubscribe('promoLoaded');
   }
-
 
   ionViewWillLeave() {
 
@@ -66,7 +68,7 @@ export class HomePage {
 
     this.events.subscribe('promoLoaded', () => {
       this.promoSliders = this.productService.promos;
-      console.log("promoSliders :: ", this.promoSliders )
+      console.log("promoSliders :: ", this.promoSliders)
       if (this.promoSliders.length > 0) {
         this.promoImagesLoaded = true;
       }
@@ -75,7 +77,7 @@ export class HomePage {
   }
 
   viewDetail(val: any) {
-    console.log("val::::",val)
-    this.navCtrl.push("StorePage",{val:val});
+    console.log("val::::", val)
+    this.navCtrl.push("StorePage", { val: val });
   }
 }
