@@ -57,13 +57,13 @@ export class RegisterPage {
       bisTypeId: 2,
       perentBisId: 'Psm5CnqpX8UQ70aeWhCZwwfNnW03'
     };
-    var picture = this.pic;
-    picURL.picture.upload(picture, "my-folder")
-      .then(function (fileURL) {
-        console.log("File successfully uploaded. Path to download: " + fileURL.fileURL);
-        picURL = fileURL.fileURL;
-      })
-    picURL.picture = picURL;
+    // var picture = this.pic;
+    // picURL.picture.upload(picture, "my-folder")
+    //   .then(function (fileURL) {
+    //     console.log("File successfully uploaded. Path to download: " + fileURL.fileURL);
+    //     picURL = fileURL.fileURL;
+    //   })
+    // picURL.picture = picURL;
 
 
     this.AuthService.registerUser(userObj)

@@ -38,11 +38,16 @@ export class AuthProvider {
     return promise;
   }
 
-  updateuser() {
+  updateuser(updateUser) {
     var user = firebase.auth().currentUser.uid;
 
     this.firedata.child(user).update({
       perentBisId: 'admin@agrocropes.lk',
+      address: updateUser.address,
+      email:updateUser.email,
+      mobile:updateUser.mobile,
+      name:updateUser.name,
+
     }).then(function () {
       // Update successful.
     }).catch(function (error) {

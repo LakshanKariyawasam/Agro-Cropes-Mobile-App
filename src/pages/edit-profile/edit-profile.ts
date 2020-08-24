@@ -22,4 +22,8 @@ export class EditProfilePage {
     console.log('ionViewDidLoad EditProfilePage');
   }
 
+  updateUser(){
+    this.authProvider.updateuser(this.userData);
+  }
+
 }
