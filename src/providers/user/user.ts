@@ -11,7 +11,6 @@ import firebase from 'firebase';
 */
 @Injectable()
 export class UserProvider {
-  a: number;
 
   constructor(public events: Events, public http: HttpClient) {
     console.log('Hello UserProvider Provider');
@@ -19,6 +18,7 @@ export class UserProvider {
 
 
   customerRef = firebase.database().ref('customers');
+  mdecodeRef = firebase.database().ref('mdecode');
 
   customers: Array<any> = [];
 
@@ -42,6 +42,30 @@ export class UserProvider {
         }
       }
       this.events.publish('customersLoaded');
+    })
+  }
+
+  removeUser() {
+    var user = firebase.auth().currentUser.uid;
+
+    var promise = new Promise((resolve, reject) => {
+      firebase.auth().currentUser.delete().then(() => {
+        this.customerRef.child(user).remove();
+        resolve(true);
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+
+    return promise;
+  }
+
+  getwtcRef() {
+    return this.mdecodeRef.orderByChild('wtcRef').once('value').then(function (snap) {
+      if (snap.val()) {
+        return snap.val().wtcRef;
+      }
     });
   }
+
 }

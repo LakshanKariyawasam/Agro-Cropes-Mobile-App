@@ -106,4 +106,13 @@ export class OrderProvider {
     });
   }
 
+  acceptOrder(order: any) {
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('orders/' + order.id + '/acceptStatus').set(1).then(() => {
+        resolve(true);
+      })
+    });
+    return promise;
+  }
+
 }

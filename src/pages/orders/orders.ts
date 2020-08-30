@@ -19,9 +19,9 @@ export class OrdersPage {
 
 
   userId: any;
-  orders: any[];
-  ordersDetails: any[];
-  customers: any[];
+  orders: any[] = [];
+  ordersDetails: any[] = [];
+  customers: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private loadingCtrl: LoadingController,
@@ -65,6 +65,10 @@ export class OrdersPage {
 
   showDetails(order) {
     this.navCtrl.push("OrderDetailsPage", { order: order });
+    // let currentIndex = this.navCtrl.getActive().index;
+    // this.navCtrl.setRoot('OrderDetailsPage', { order: order }).then(() => {
+    //   this.navCtrl.remove(currentIndex);
+    // });
   }
 
 }

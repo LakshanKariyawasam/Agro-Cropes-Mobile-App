@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Users</ion-title>
+  </ion-navbar>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col (click)="addNewUser()">
+        <button round=true ion-button full color="secondary">
+          Add New User
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-card *ngFor="let customer of customers" width-50>
+      <ion-card-content>
+        <p style="float: left;">
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">User Ref
+            :</span>{{customer.userId}}
+        </p>
+        <br>
+        <p style="float: left;">
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Vendor Name
+            :</span>{{customer.name}}
+        </p>
+        <br>
+        <p style="float: left;">
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">User Email
+            :</span>{{customer.email}}
+        </p>
+        <br>
+        <p style="float: left;">
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Vendor Mobile
+            :</span>{{customer.mobile}}
+        </p>
+        <br>
+        <p style="float: left;">
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Vendor Address
+            :</span>{{customer.address}}
+        </p>
+        <ion-col style="padding-top: 13px;" text-right>
+          <button (click)="removeUser()" ion-button small color="danger">
+            Remove
+          </button>
+        </ion-col>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

@@ -24,14 +24,13 @@ export class TabsPage {
   customers: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, private orderService: OrderProvider, private userService: UserProvider, public events: Events) {
-    // this.userId = JSON.parse(window.localStorage.getItem('user')).userId;
-
-    this.events.publish('user:login');
+    this.userId = JSON.parse(window.localStorage.getItem('user')).userId;
+    
     this.events.subscribe('countOrders', () => {
 
     });
 
-    // this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+    this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
 
     if (this.bisTypeId == 2) {
       this.mySelectedIndex = navParams.data.tabIndex || 0;

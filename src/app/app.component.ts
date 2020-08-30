@@ -72,7 +72,7 @@ export class MyApp {
           { title: 'Store', component: 'HomePage', icon: 'ios-archive' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
           { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
-          { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
+          { title: 'User Maintenance', component: 'UsersPage', icon: 'ios-people' },
         ];
       }
     });

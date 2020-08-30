@@ -27,8 +27,13 @@ export class AuthProvider {
 
   login(loginParams) {
     var promise = new Promise((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then(() => {
-        resolve(true);
+      firebase.auth().signInWithEmailAndPassword(loginParams.email, loginParams.password).then((user) => {
+        if (user.emailVerified) {
+          resolve(true);
+        } else {
+          this.SendVerificationMail();
+          resolve(false);
+        }
         // this.updateuser();
       }).catch((err) => {
         reject(err);
@@ -44,9 +49,9 @@ export class AuthProvider {
     this.firedata.child(user).update({
       perentBisId: 'admin@agrocropes.lk',
       address: updateUser.address,
-      email:updateUser.email,
-      mobile:updateUser.mobile,
-      name:updateUser.name,
+      email: updateUser.email,
+      mobile: updateUser.mobile,
+      name: updateUser.name,
 
     }).then(function () {
       // Update successful.
@@ -69,13 +74,44 @@ export class AuthProvider {
             email: userObj.email,
             mobile: userObj.mobile,
             bisTypeId: userObj.bisTypeId,
-            perentBisId: userObj.perentBisId
+            perentBisId: userObj.perentBisId,
+            userId: firebase.auth().currentUser.uid
           }).then(() => {
             resolve({ success: true });
           }).catch((err) => {
             reject(err);
           })
-          resolve(true);
+          resolve({ success: true });
+        })
+        .catch(err => {
+          reject(err);
+        });
+    })
+    return promise;
+  }
+
+  registerVendor(userObj: any) {
+    var uid = firebase.auth().currentUser.uid;
+    var promise = new Promise((resolve, reject) => {
+      firebase.auth().createUserWithEmailAndPassword(userObj.email, userObj.password)
+        .then(() => {
+
+          this.SendVerificationMail();
+
+          this.firedata.child(firebase.auth().currentUser.uid).set({
+            name: userObj.name,
+            address: userObj.address,
+            email: userObj.email,
+            mobile: userObj.mobile,
+            bisTypeId: userObj.bisTypeId,
+            perentBisId: uid,
+            userId: firebase.auth().currentUser.uid
+          }).then(() => {
+            resolve({ success: true });
+          }).catch((err) => {
+            reject(err);
+          })
+          resolve({ success: true });
         })
         .catch(err => {
           reject(err);
