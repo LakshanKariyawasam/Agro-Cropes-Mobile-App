@@ -32,10 +32,6 @@ export class CartPage {
     this.loadCartItems();
   }
 
-  // ionViewDidLoad() {
-  //   this.loadCartItems();
-  // }
-
   loadCartItems() {
     this.totalCount = 0;
     let loader = this.loadingCtrl.create({
@@ -59,7 +55,9 @@ export class CartPage {
         this.isCartItemLoaded = true;
         loader.dismiss();
       })
-      .catch(err => {});
+      .catch(err => {
+        loader.dismiss();
+      });
   }
 
   checkOut() {

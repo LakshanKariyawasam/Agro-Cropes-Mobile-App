@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController } from "ionic-angular";
+import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController, Events } from "ionic-angular";
 import { UserData } from "../../providers/user-data";
 import { AuthProvider } from "../../providers/auth/auth";
 
@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   userData = { "username": "", "password": "" };
 
   constructor(public nav: NavController, public alertCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, public userDataOne: UserData, public authService: AuthProvider,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController, public events: Events) {
     this.menu.swipeEnable(false);
   }
 
@@ -41,12 +41,19 @@ export class LoginPage implements OnInit {
       password: this.userData.password
     }
 
+
     this.authService.login(loginParams).then((res) => {
-      loader.dismiss();
-      this.authService.getuserdetails().then((res) => {
-        window.localStorage.setItem('user', JSON.stringify(res));
-        this.nav.setRoot('TabsPage', { tabIndex: 0 });
-      })
+      if (res == false) {
+        this.presentAlert("Your account is not activate, An activation link has been sent to your registered email");
+        loader.dismiss();
+      } else {
+        loader.dismiss();
+        this.authService.getuserdetails().then((res) => {
+          window.localStorage.setItem('user', JSON.stringify(res));
+          this.events.publish('user:login');
+          this.nav.setRoot('TabsPage', { tabIndex: 0 });
+        })
+      }
     }).catch((err) => {
       loader.dismiss();
       this.presentAlert(err.message);

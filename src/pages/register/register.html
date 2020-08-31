@@ -6,7 +6,7 @@
             </h2>
             <ion-row>
                 <ion-col>
-                    <h3 text-center color="primary">Register</h3>
+                    <h3 text-center color="primary">Register Fro WTC</h3>
                 </ion-col>
             </ion-row>
         </div>
@@ -56,10 +56,10 @@
                             Please input your mobile
                         </div>
                         <div class="error" *ngIf="signupform.get('mobile').hasError('minlength') && signupform.get('mobile').touched">
-                            Minimum 4 characters
+                            Minimum 11 characters
                         </div>
                         <div class="error" *ngIf="signupform.get('mobile').hasError('maxlength') && signupform.get('mobile').touched">
-                            Maximum 15 characters
+                            Maximum 11 characters
                         </div>
                         <div class="error" *ngIf="signupform.get('mobile').hasError('pattern') && signupform.get('mobile').touched">
                             Just use valid pattern

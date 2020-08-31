@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "309560786035",
+    "firebase_url": "https://agrocropes-c9415.firebaseio.com",
+    "project_id": "agrocropes-c9415",
+    "storage_bucket": "agrocropes-c9415.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309560786035:android:099f8ad55cb34163f03e06",
+        "android_client_info": {
+          "package_name": "com.ionicframework.ionicstartheme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309560786035-9apcr909n84b1dhvsh6p20s7manq64jj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3aUi94KqhKr1aXch3luNYRpHlcFAEk_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309560786035-9apcr909n84b1dhvsh6p20s7manq64jj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
