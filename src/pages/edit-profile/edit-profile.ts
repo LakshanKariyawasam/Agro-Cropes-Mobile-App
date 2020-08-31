@@ -23,7 +23,10 @@ export class EditProfilePage {
   }
 
   updateUser(){
-    this.authProvider.updateuser(this.userData);
+    if(this.authProvider.updateuser(this.userData)){
+      
+      console.log("<<<<<<<<<<    Success >>>>>>>>>");
+    }
   }
 
 }

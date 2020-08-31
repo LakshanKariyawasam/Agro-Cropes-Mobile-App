@@ -38,21 +38,23 @@ export class AuthProvider {
     return promise;
   }
 
-  updateuser(updateUser) {
-    var user = firebase.auth().currentUser.uid;
+  updateuser(updateUser: any) {
+    var promise = new Promise((resolve, reject) => {
+      var user = firebase.auth().currentUser.uid;
 
-    this.firedata.child(user).update({
-      perentBisId: 'admin@agrocropes.lk',
-      address: updateUser.address,
-      email:updateUser.email,
-      mobile:updateUser.mobile,
-      name:updateUser.name,
+      this.firedata.child(user).update({
+        address: updateUser.address,
+        email: updateUser.email,
+        mobile: updateUser.mobile,
+        name: updateUser.name
 
-    }).then(function () {
-      // Update successful.
-    }).catch(function (error) {
-      // An error happened.
-    });
+      }).then(() => {
+        resolve({ success: true });
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise;
   }
 
   registerUser(userObj: any) {
