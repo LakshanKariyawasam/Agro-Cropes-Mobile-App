@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ModalController, LoadingController } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, Events } from 'ionic-angular';
 import { OrderProvider } from '../../providers/order/order';
-
-/**
- * Generated class for the OrdersPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
-  selector: 'page-orders',
-  templateUrl: 'orders.html',
+  selector: 'page-order-history',
+  templateUrl: 'order-history.html',
 })
-export class OrdersPage {
-
+export class OrderHistoryPage {
 
   userId: any;
-  pendingorders: any[] = [];
-  ordersDetails: any[] = [];
+  acceptOrders: any[] = [];
+  acceptOrdersCnt: any;
+  rejectOrders: any[] = [];
+  rejectOrdersCnt: any;
   customers: any[] = [];
+
+
+  public statusChange: any;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController, private orderService: OrderProvider, private userService: UserProvider, public events: Events) {
     this.userId = JSON.parse(window.localStorage.getItem('user')).userId;
+    this.statusChange = 'accepted';
   }
+
 
   ionViewWillEnter() {
     this.getorders();
@@ -35,11 +35,8 @@ export class OrdersPage {
 
   ionViewDidLeave() {
     this.events.unsubscribe('customersLoaded');
-    this.events.unsubscribe('pendingOrderLoaded');
-  }
-
-  ionViewWillLeave() {
-
+    this.events.unsubscribe('acceptOrderLoaded');
+    this.events.unsubscribe('rejectOrderLoaded');
   }
 
   getorders() {
@@ -48,15 +45,25 @@ export class OrdersPage {
     });
     loader.present();
 
-    this.orderService.change();
 
     this.userService.getUserListByPerentUser(this.userId);
     this.events.subscribe('customersLoaded', () => {
       this.customers = this.userService.customers;
       this.customers.forEach(element => {
-        this.orderService.getPendingOrderListByUser(element);
-        this.events.subscribe('pendingOrderLoaded', () => {
-          this.pendingorders = this.orderService.pendingorders;
+
+        this.orderService.change();
+        this.orderService.getAcceptOrderListByUser(element);
+        this.events.subscribe('acceptOrderLoaded', () => {
+          this.acceptOrders = this.orderService.acceptorders;
+          this.acceptOrdersCnt = this.acceptOrders.length;
+          loader.dismiss();
+        })
+
+        this.orderService.change();
+        this.orderService.getRejectOrderListByUser(element);
+        this.events.subscribe('rejectOrderLoaded', () => {
+          this.rejectOrders = this.orderService.rejectorders;
+          this.rejectOrdersCnt = this.rejectOrders.length;
           loader.dismiss();
         })
       });
@@ -64,11 +71,10 @@ export class OrdersPage {
   }
 
   showDetails(order) {
-    this.navCtrl.push("OrderDetailsPage", { order: order , id: 1});
+    this.navCtrl.push("OrderDetailsPage", { order: order, id: 2 });
     // let currentIndex = this.navCtrl.getActive().index;
     // this.navCtrl.setRoot('OrderDetailsPage', { order: order }).then(() => {
     //   this.navCtrl.remove(currentIndex);
     // });
   }
-
 }

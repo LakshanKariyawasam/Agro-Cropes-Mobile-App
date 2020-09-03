@@ -20,10 +20,12 @@ export class OrderDetailsPage {
 
   ordersDetails: any[];
   order: any;
+  id: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private orderService: OrderProvider, public events: Events,
     private loadingCtrl: LoadingController, private cartService: CartProvider, public toastCtrl: ToastController) {
     this.order = this.navParams.get("order");
+    this.id = this.navParams.get("id");
     console.log("order ::: ", this.order);
   }
 
@@ -55,19 +57,21 @@ export class OrderDetailsPage {
     });
     loader.present();
 
+    let me = this;
     this.orderService.acceptOrder(this.order).then(() => {
-      this.presentAlert("Order Creation Sucsessfully, An activation link has been sent to vendor registered email");
+      this.presentAlert("Order Accept Sucsessfully.");
       this.ordersDetails.forEach((v, indx) => {
-        this.addToCart(v);
+        setTimeout(function () {
+          me.addToCart(v, indx);
+        }, 1000 * (indx + 1));
       });
       loader.dismiss();
     });
   }
 
 
-  addToCart(product) {
-    console.log("product:: ", product);
-    var productPrice = product.qty * parseInt(product.price);
+  addToCart(product, indx) {
+    var productPrice = 0;
     let cartProduct = {
       product_id: product.id,
       name: product.productName,
@@ -77,6 +81,18 @@ export class OrderDetailsPage {
     };
     this.cartService.addToCart(cartProduct).then((val) => {
       this.presentToast(cartProduct.name);
+    });
+  }
+
+  rejectOrder() {
+    let loader = this.loadingCtrl.create({
+      content: 'Rejecting order..'
+    });
+    loader.present();
+
+    this.orderService.rejectOrder(this.order).then(() => {
+      this.presentAlert("Order Reject Sucsessfully.");
+      loader.dismiss();
     });
   }
 
@@ -96,7 +112,7 @@ export class OrderDetailsPage {
 
   presentAlert(message) {
     let alert = this.alertCtrl.create({
-      title: 'Auth Success',
+      title: 'Success',
       subTitle: message,
       buttons: ['Close']
     });

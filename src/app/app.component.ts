@@ -63,16 +63,16 @@ export class MyApp {
           { title: 'Home', component: 'TabsPage', icon: 'home' },
           { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
-          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          // { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
           { title: 'About Us', component: 'AboutUsPage', icon: 'ios-information-circle' },
         ];
       } else {
         this.appMenuItems = [
           { title: 'Home', component: 'TabsPage', icon: 'home' },
           { title: 'Store', component: 'HomePage', icon: 'ios-archive' },
-          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
-          { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'Order History', component: 'OrderHistoryPage', icon: 'basket' },
           { title: 'User Maintenance', component: 'UsersPage', icon: 'ios-people' },
+          { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
         ];
       }
     });

@@ -8,7 +8,9 @@ export class OrderProvider {
   orderDetails = firebase.database().ref("ordersdetails");
   photoRef = firebase.storage().ref();
 
-  orders: Array<any> = [];
+  acceptorders: Array<any> = [];
+  rejectorders: Array<any> = [];
+  pendingorders: Array<any> = [];
   ordersDetails: Array<any> = [];
   a: number;
   constructor(public events: Events) { }
@@ -58,10 +60,10 @@ export class OrderProvider {
     this.a = 1;
   }
 
-  getOrderListByUser(user) {
+  getPendingOrderListByUser(user) {
     this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
       if (this.a == 1) {
-        this.orders = [];
+        this.pendingorders = [];
         this.a++;
       }
 
@@ -79,11 +81,69 @@ export class OrderProvider {
               mobile: user.mobile,
               userId: tempOrders[key].userId
             };
-            this.orders.push(singleOrder);
+            this.pendingorders.push(singleOrder);
           }
         }
       }
-      this.events.publish('orderLoaded');
+      this.events.publish('pendingOrderLoaded');
+    })
+  }
+
+  getAcceptOrderListByUser(user) {
+    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
+      if (this.a == 1) {
+        this.acceptorders = [];
+        this.a++;
+      }
+
+      if (snap.val()) {
+        var tempOrders = snap.val();
+        for (var key in tempOrders) {
+          if (tempOrders[key].acceptStatus == 1) {
+            let singleOrder = {
+              id: key,
+              acceptStatus: tempOrders[key].acceptStatus,
+              dateInserted: tempOrders[key].dateInserted,
+              orderRef: tempOrders[key].orderRef,
+              totalCount: tempOrders[key].totalCount,
+              userName: user.name,
+              mobile: user.mobile,
+              userId: tempOrders[key].userId
+            };
+            this.acceptorders.push(singleOrder);
+          }
+        }
+      }
+      this.events.publish('acceptOrderLoaded');
+    })
+  }
+
+  getRejectOrderListByUser(user) {
+    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
+      if (this.a == 1) {
+        this.rejectorders = [];
+        this.a++;
+      }
+
+      if (snap.val()) {
+        var tempOrders = snap.val();
+        for (var key in tempOrders) {
+          if (tempOrders[key].acceptStatus == 3) {
+            let singleOrder = {
+              id: key,
+              acceptStatus: tempOrders[key].acceptStatus,
+              dateInserted: tempOrders[key].dateInserted,
+              orderRef: tempOrders[key].orderRef,
+              totalCount: tempOrders[key].totalCount,
+              userName: user.name,
+              mobile: user.mobile,
+              userId: tempOrders[key].userId
+            };
+            this.rejectorders.push(singleOrder);
+          }
+        }
+      }
+      this.events.publish('rejectOrderLoaded');
     })
   }
 
@@ -115,4 +175,12 @@ export class OrderProvider {
     return promise;
   }
 
+  rejectOrder(order: any) {
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('orders/' + order.id + '/acceptStatus').set(3).then(() => {
+        resolve(true);
+      })
+    });
+    return promise;
+  }
 }

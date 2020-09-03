@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-card *ngFor="let order of orders" width-50 (click)="showDetails(order)">
+    <ion-card *ngFor="let order of pendingorders" width-50 (click)="showDetails(order)">
       <ion-card-content>
         <p style="float: left;">
           Order Ref :{{order.orderRef}}

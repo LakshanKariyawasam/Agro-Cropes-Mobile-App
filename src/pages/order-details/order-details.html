@@ -33,7 +33,7 @@
   </ion-card>
 </ion-content>
 
-<ion-footer class="single-footer">
+<ion-footer class="single-footer" *ngIf="id == 1">
 
   <ion-grid>
     <ion-row>
@@ -41,7 +41,7 @@
         <button round=true ion-button full color="secondary" (click)="acceptOrder()">
           Accept
         </button>
-        <button round=true ion-button full color="danger" (click)="rjectOrder()">
+        <button round=true ion-button full color="danger" (click)="rejectOrder()">
           Reject
         </button>
       </ion-col>
