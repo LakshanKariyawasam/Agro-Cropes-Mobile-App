@@ -1,50 +1,26 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController } from "ionic-angular";
-import { AuthProvider } from "../../providers/auth/auth";
+import {Component} from "@angular/core";
+import {NavController} from "ionic-angular";
+import {LoginPage} from "../login/login";
+import {HomePage} from "../home/home";
 
 
-@IonicPage()
 @Component({
-  selector: "page-register",
-  templateUrl: "register.html"
+  selector: 'page-register',
+  templateUrl: 'register.html'
 })
 export class RegisterPage {
-  trade:any;
-  name: any;
-  address: any;
-  email: any;
-  mobile: any;
-  password: any;
-  constructor(
-    public navCtrl: NavController,
-    public AuthService: AuthProvider
-  ) {}
 
-  ionViewDidLoad() {}
-
-  register() {
-    var userObj = {
-      trade:this.trade,
-      name: this.name,
-      address: this.address,
-      email: this.email,
-      mobile: this.mobile,
-      password: this.password,
-      parentBisId: 520
-    };
-
-    this.AuthService.registerUser(userObj)
-      .then((response: any) => {
-        if (response.success == true) {
-          this.navCtrl.setRoot('TabsPage', { tabIndex: 0 });
-        }
-      })
-      .catch(err => {
-        alert(JSON.stringify(err));
-      });
+  constructor(public nav: NavController) {
   }
 
-  showLoginPage() {
-    this.navCtrl.push("LoginPage");
+  
+  // register and go to home page
+  register() {
+    this.nav.setRoot(HomePage);
+  }
+
+  // go to login page
+  login() {
+    this.nav.setRoot(LoginPage);
   }
 }

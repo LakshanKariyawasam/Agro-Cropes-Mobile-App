@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Events } from "ionic-angular";
 import firebase from "firebase";
-import { UserData } from "../user-data";
 
 @Injectable()
 export class AuthProvider {

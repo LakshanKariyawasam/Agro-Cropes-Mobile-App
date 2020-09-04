@@ -1,4 +1,3 @@
-import { config } from './../config/app.config';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -6,35 +5,32 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Keyboard } from '@ionic-native/keyboard';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {Keyboard} from '@ionic-native/keyboard';
 import { CallNumber } from '@ionic-native/call-number';
 import { GoogleMaps } from "@ionic-native/google-maps";
-import { IonMarqueeModule } from "../ion-marquee";
+import {IonMarqueeModule} from "../ion-marquee";
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 
 
-import { ActivityService } from "../services/activity-service";
-import { TripService } from "../services/trip-service";
-import { WeatherProvider } from "../services/weather";
+import {ActivityService} from "../services/activity-service";
+import {TripService} from "../services/trip-service";
+import {WeatherProvider} from "../services/weather";
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { StarRatingModule } from 'ionic3-star-rating';
 
-import { MyApp } from "./app.component";
+import {MyApp} from "./app.component";
 
-import firebase from 'firebase'
-
-import { ProductsProvider } from '../providers/products/products';
-import { UserData } from '../providers/user-data';
-import { AuthProvider } from '../providers/auth/auth';
-import { CartProvider } from '../providers/cart/cart';
-import { CategoryProvider } from '../providers/category/category';
-import { OrderProvider } from '../providers/order/order';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions';
-
-
-firebase.initializeApp(config.firebaseConfig);
+import {SettingsPage} from "../pages/settings/settings";
+import {CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
+import {HomePage} from "../pages/home/home";
+import {LoginPage} from "../pages/login/login";
+import {NotificationsPage} from "../pages/notifications/notifications";
+import {RegisterPage} from "../pages/register/register";
+import {SearchLocationPage} from "../pages/search-location/search-location";
+import {TripDetailPage} from "../pages/trip-detail/trip-detail";
+import {TripsPage} from "../pages/trips/trips";
+import {LocalWeatherPage} from "../pages/local-weather/local-weather";
 
 // import services
 // end import services
@@ -45,13 +41,22 @@ firebase.initializeApp(config.firebaseConfig);
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    SettingsPage,
+    CheckoutTripPage,
+    HomePage,
+    LoginPage,
+    LocalWeatherPage,
+    NotificationsPage,
+    RegisterPage,
+    SearchLocationPage,
+    TripDetailPage,
+    TripsPage
   ],
   imports: [
     BrowserModule,
     IonMarqueeModule,
     HttpClientModule,
-    StarRatingModule,
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: true,
@@ -60,12 +65,22 @@ firebase.initializeApp(config.firebaseConfig);
     }),
     IonicStorageModule.forRoot({
       name: '__Get_Rest',
-      driverOrder: ['indexeddb', 'sqlite', 'websql']
+        driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    SettingsPage,
+    CheckoutTripPage,
+    HomePage,
+    LoginPage,
+    LocalWeatherPage,
+    NotificationsPage,
+    RegisterPage,
+    SearchLocationPage,
+    TripDetailPage,
+    TripsPage
   ],
   providers: [
     StatusBar,
@@ -73,20 +88,12 @@ firebase.initializeApp(config.firebaseConfig);
     Keyboard,
     ActivityService,
     TripService,
-    NativePageTransitions,
     WeatherProvider,
     FingerprintAIO,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CallNumber,
     SocialSharing,
-    GoogleMaps,
-    UserData,
-    ProductsProvider,
-    AuthProvider,
-    CartProvider,
-    CategoryProvider,
-    OrderProvider,
-    
+    GoogleMaps
   ]
 })
 

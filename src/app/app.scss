@@ -41,11 +41,11 @@
 //
 //
 .text-primary {
-  color: color($colors, max);
+  color: color($colors, primary);
 }
 
 .text-secondary {
-  color: color($colors, max);
+  color: color($colors, secondary);
 }
 
 .text-green {
@@ -295,27 +295,12 @@ ion-navbar.no-border {
   }
 }
 
-// style for first page
-.first-page {
-  background-color: #fff;
-  &::after {
-    content: "";
-    background: url("../assets/imgs/firstScreen.jpg") no-repeat;
-    background-size: cover;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: 0;
-  }
-}
 // style for auth pages
 .auth-page {
   background-color: #fff;
   &::after {
     content: "";
-    background: url("../assets/imgs/bg.jpg") no-repeat;
+    background: url("../assets/img/bg.jpg") no-repeat;
     background-size: cover;
     top: 0;
     left: 0;
@@ -335,11 +320,11 @@ ion-navbar.no-border {
       width: 86%;
 
       .logo {
-        width: 150px;
-        height: 120px;
+        width: 60px;
+        height: 60px;
         margin: 20px auto 0;
         border-radius: 10%;
-        background: url("../assets/imgs/logo.png") no-repeat;
+        background: url("../assets/img/ionic3-ico.png") no-repeat;
         background-size: 100%;
       }
 
@@ -386,7 +371,7 @@ ion-navbar.no-border {
     }
   }
   .toolbar-background {
-    background-image: linear-gradient(135deg, color($colors, dark), color($colors, primary), color($colors, light));
+    background-image: linear-gradient(135deg, color($colors, dark), color($colors, primary));
   }
 
   .other-data {

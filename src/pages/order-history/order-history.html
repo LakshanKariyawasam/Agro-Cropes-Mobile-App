@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order History</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="statusChange" color="light">
+      <ion-segment-button value="accepted">
+        Accepted &nbsp;<span
+          style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{acceptOrdersCnt}}</span>
+      </ion-segment-button>
+      <ion-segment-button value="rejected">
+        Rejected &nbsp;<span
+          style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{rejectOrdersCnt}}</span>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div [ngSwitch]="statusChange">
+    <ion-grid *ngSwitchCase="'accepted'">
+      <ion-card *ngFor="let order of acceptOrders" width-50 (click)="showDetails(order)">
+        <ion-card-content>
+          <p style="float: left;">
+            Order Ref :{{order.orderRef}}
+          </p>
+          <br>
+          <p style="float: right;">
+            Order Qty :{{order.totalCount}}
+          </p>
+          <br>
+          <p style="float: left;">
+            Vendor Name :{{order.userName}}
+          </p>
+          <br>
+          <br>
+          <p style="float: right;">
+            Vendor Mobile :{{order.mobile}}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'rejected'">
+      <ion-card *ngFor="let order of rejectOrders" width-50 (click)="showDetails(order)">
+        <ion-card-content>
+          <p style="float: left;">
+            Order Ref :{{order.orderRef}}
+          </p>
+          <br>
+          <p style="float: right;">
+            Order Qty :{{order.totalCount}}
+          </p>
+          <br>
+          <p style="float: left;">
+            Vendor Name :{{order.userName}}
+          </p>
+          <br>
+          <br>
+          <p style="float: right;">
+            Vendor Mobile :{{order.mobile}}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+  </div>
+</ion-content>

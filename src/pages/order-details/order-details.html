@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let itm of  ordersDetails">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-7>
+          <h2 style="margin: 7px" text-left>{{itm.productName}}</h2>
+          <div class="itm-footer">
+            <span class="price">
+              Kilos: {{itm.qty}} kg
+            </span>
+          </div>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-avatar>
+              <img style="float: right" src="{{itm.thumb}}">
+            </ion-avatar>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer class="single-footer" *ngIf="id == 1">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-right>
+        <button round=true ion-button full color="secondary" (click)="acceptOrder()">
+          Accept
+        </button>
+        <button round=true ion-button full color="danger" (click)="rejectOrder()">
+          Reject
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input [(ngModel)]="userData.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="userData.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address</ion-label>
+      <ion-input [(ngModel)]="userData.address"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Mobile Number</ion-label>
+      <ion-input [(ngModel)]="userData.mobile"></ion-input>
+    </ion-item>
+  </ion-card>
+  
+  <ion-card>
+    <button (click)="updateUser()" block ion-button color="primary">
+      Save
+    </button>
+  </ion-card>
+</ion-content>

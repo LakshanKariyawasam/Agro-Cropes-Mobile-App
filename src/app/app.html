@@ -5,22 +5,21 @@
       <ion-grid>
         <ion-row>
           <ion-col col-4>
-            <div class="user-avatar">
-              <img src="assets/imgs/use.png">
-            </div>
+              <div class="user-avatar">
+                <img src="assets/img/avatar.jpeg">
+              </div>
           </ion-col>
           <ion-col padding-top col-8>
             <h2 ion-text class="no-margin bold text-white">
               Suranja Liyanage
             </h2>
-            <ion-icon style="zoom:1.2; margin-left: -0.2em; margin-top: 1em; color: gold" name="star" item-left>
-            </ion-icon><span ion-text color="light">Gold Member</span>
+            <ion-icon style="zoom:1.2; margin-left: -0.2em; margin-top: 1em; color: gold" name="star"  item-left></ion-icon><span ion-text color="light">Gold Member</span>
           </ion-col>
         </ion-row>
 
         <ion-row no-padding class="other-data">
           <ion-col no-padding class="column">
-            <button ion-button icon-left small full color="light" menuClose>
+            <button ion-button icon-left small full color="light" menuClose disabled>
               <ion-icon name="contact"></ion-icon>
               Edit Profile
             </button>
@@ -38,12 +37,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content color="max">
+  <ion-content color="primary">
 
     <ion-list class="user-list">
       <button ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)">
-        <ion-icon item-left [name]="menuItem.icon" color="max"></ion-icon>
-        <span ion-text color="max">{{menuItem.title}}</span>
+        <ion-icon item-left [name]="menuItem.icon" color="primary"></ion-icon>
+        <span ion-text color="primary">{{menuItem.title}}</span>
       </button>
     </ion-list>
   </ion-content>
