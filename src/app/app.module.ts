@@ -1,36 +1,44 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
-
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {Keyboard} from '@ionic-native/keyboard';
+import { BrowserModule } from '@angular/platform-browser';
 import { CallNumber } from '@ionic-native/call-number';
-import { GoogleMaps } from "@ionic-native/google-maps";
-import {IonMarqueeModule} from "../ion-marquee";
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
-
-
-import {ActivityService} from "../services/activity-service";
-import {TripService} from "../services/trip-service";
-import {WeatherProvider} from "../services/weather";
+import { GoogleMaps } from "@ionic-native/google-maps";
+import { Keyboard } from '@ionic-native/keyboard';
+import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
-import {MyApp} from "./app.component";
+import firebase from 'firebase';
 
-import {SettingsPage} from "../pages/settings/settings";
-import {CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
-import {HomePage} from "../pages/home/home";
-import {LoginPage} from "../pages/login/login";
-import {NotificationsPage} from "../pages/notifications/notifications";
-import {RegisterPage} from "../pages/register/register";
-import {SearchLocationPage} from "../pages/search-location/search-location";
-import {TripDetailPage} from "../pages/trip-detail/trip-detail";
-import {TripsPage} from "../pages/trips/trips";
-import {LocalWeatherPage} from "../pages/local-weather/local-weather";
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { StarRatingModule } from 'ionic3-star-rating';
+
+import { IonMarqueeModule } from "../ion-marquee";
+import { AuthProvider } from '../providers/auth/auth';
+import { CartProvider } from '../providers/cart/cart';
+import { CategoryProvider } from '../providers/category/category';
+import { OrderProvider } from '../providers/order/order';
+import { ProductsProvider } from '../providers/products/products';
+import { UserData } from '../providers/user-data';
+import { ActivityService } from "../services/activity-service";
+import { TripService } from "../services/trip-service";
+import { WeatherProvider } from "../services/weather";
+import { config } from './../config/app.config';
+import { MyApp } from "./app.component";
+import { UserProvider } from '../providers/user/user';
+
+
+
+
+
+
+
+
+firebase.initializeApp(config.firebaseConfig);
 
 // import services
 // end import services
@@ -41,22 +49,14 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
 
 @NgModule({
   declarations: [
-    MyApp,
-    SettingsPage,
-    CheckoutTripPage,
-    HomePage,
-    LoginPage,
-    LocalWeatherPage,
-    NotificationsPage,
-    RegisterPage,
-    SearchLocationPage,
-    TripDetailPage,
-    TripsPage
+    MyApp
+
   ],
   imports: [
     BrowserModule,
     IonMarqueeModule,
     HttpClientModule,
+    StarRatingModule,
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: true,
@@ -65,22 +65,12 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
     }),
     IonicStorageModule.forRoot({
       name: '__Get_Rest',
-        driverOrder: ['indexeddb', 'sqlite', 'websql']
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    SettingsPage,
-    CheckoutTripPage,
-    HomePage,
-    LoginPage,
-    LocalWeatherPage,
-    NotificationsPage,
-    RegisterPage,
-    SearchLocationPage,
-    TripDetailPage,
-    TripsPage
+    MyApp
   ],
   providers: [
     StatusBar,
@@ -88,12 +78,20 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
     Keyboard,
     ActivityService,
     TripService,
+    NativePageTransitions,
     WeatherProvider,
     FingerprintAIO,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CallNumber,
     SocialSharing,
-    GoogleMaps
+    GoogleMaps,
+    UserData,
+    ProductsProvider,
+    AuthProvider,
+    CartProvider,
+    CategoryProvider,
+    OrderProvider,
+    UserProvider
   ]
 })
 

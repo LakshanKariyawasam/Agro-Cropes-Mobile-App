@@ -1,57 +1,61 @@
-<!-- -->
 <ion-header>
   <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>
-      <strong>Get Rest</strong> 
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button tappable (click)="presentNotifications($event)">
-        <ion-icon name="notifications"></ion-icon>
-      </button>
-      <button ion-button tappable (click)="goToAccount()">
-        <ion-icon name="cog"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-title>Home</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="animated fadeIn common-bg">
+<ion-content class="dark">
+  <ion-slides *ngIf="promoImagesLoaded" autoplay=3000 slidesPerView=1>
+    <ion-slide *ngFor="let promo of promoSliders">
+      <img src="{{promo.name}}" alt="">
+    </ion-slide>
+  </ion-slides>
+  <!-- <ion-grid>
+    <ion-row *ngFor="let i of productRows">
+      <ion-col *ngFor="let product of products | slice:(i*2):(i+1)*2" width-50 (click)="showDetails(product)">
+        <ion-card>
+          <img src="{{product.thumb}}" alt="">
+          <ion-card-content>
+            <p>
+              {{product.price | currency:'USD':true:'1.2-2'}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <ion-grid>
+    <ion-row class="carts">
+      <ion-col>
+        <div class="cart card" (click)="viewDetail('Vegetables')" margin-bottom>
+          <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/vegetables.png)'}">
+            <div class="background-filter rlt">
+              <div class="align-bottom" padding-left padding-right>
+                <h6 class="pull-left text-white" ion-text>Vegetables</h6>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="cart card" tappable (click)="viewDetail('Fruits')" margin-bottom>
+          <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/fruits.png)'}">
+            <div class="background-filter rlt">
+              <div class="align-bottom" padding-left padding-right>
+                <h6 class="pull-left text-white" ion-text>Fruits</h6>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <ion-card no-margin margin-bottom class="full-width">
-    <ion-item tappable (click)="choosePlace('from')" class="border-bottom">
-      <ion-icon name="search" color="primary" item-left></ion-icon>
-      <span>{{ search.name }}</span>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="md-calendar" color="primary" item-left></ion-icon>
-      <ion-datetime class="no-pl" min="2018" max="2023" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="search.date"></ion-datetime>
-    </ion-item>
-  </ion-card>
+</ion-content>
 
-  <button ion-button icon-start block no-margin color="primary" class="round" tappable (click)="doSearch()">
-    <ion-icon name="search"></ion-icon> Search
-  </button>
- 
- 
-  <ion-icon  style="zoom:1.2; margin-left: -0.2em; margin-top: 1em; color: gray" name="leaf"  item-left>Populer Destinations</ion-icon>
-
-  <!--slides-->
-    <ion-scroll scrollX="true" style="white-space:nowrap; height: 200px; width: 100%;">
-        <img src ="assets/img/Slider/colombo.jpg" alt="" tappable (click)="populerplace('Colombo')" />
-        <img src ="assets/img/Slider/galle.jpg" alt=""  tappable (click)="populerplace('Galle')" />
-        <img src ="assets/img/Slider/badulla.jpg" alt=""  tappable (click)="populerplace('Badulla')" />
-        <img src ="assets/img/Slider/jaffna.jpg" alt=""  />
-        <img src ="assets/img/Slider/nuwaraeliya.jpg" alt="" />
-        <img src ="assets/img/Slider/kandy.jpg" alt=""  tappable (click)="populerplace('Kandy')" />
-    </ion-scroll>
-
-
- 
-    <img id="image" align="center" class="mainPicture" src="assets/img/Ad/output.gif" />
-
-    <!-- <ion-icon  style="zoom:1.2; margin-left: -0.2em; margin-top: 0.7em; color: gray" name="aperture"  item-left>Suscribe to receive our Secret Deals</ion-icon>
-    <h2>Enter email addre</h2> -->
-  </ion-content>
+<!-- autoplay=6000 -->

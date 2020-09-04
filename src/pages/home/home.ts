@@ -1,79 +1,83 @@
-import {Component} from "@angular/core";
-import {NavController, PopoverController} from "ionic-angular";
-import {Storage} from '@ionic/storage';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { ProductsProvider } from '../../providers/products/products';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 
-import {NotificationsPage} from "../notifications/notifications";
-import {SettingsPage} from "../settings/settings";
-import {TripsPage} from "../trips/trips";
-import {SearchLocationPage} from "../search-location/search-location";
 
+@IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
-
 export class HomePage {
 
-  public date: string;
-  // search condition
-  public search = {
-    name: "Choose your location...",
-    date: new Date().toISOString()
+  bisTypeId: any;
+  promoSliders: any[];
+  promoImagesLoaded: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private productService: ProductsProvider,
+    private loadingCtrl: LoadingController,
+    private events: Events, private nativePageTransitions: NativePageTransitions) {
+    this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
+    console.log("bisTypeId ::: ", this.bisTypeId)
   }
- 
 
-  constructor(private storage: Storage, public nav: NavController, public popoverCtrl: PopoverController) {
-  }
-
-
-  
   ionViewWillEnter() {
-    // this.search.pickup = "Rio de Janeiro, Brazil";
-    // this.search.dropOff = "Same as pickup";
-    this.storage.get('pickup').then((val) => {
-      if (val === null) {
-        this.search.name = "Choose your location...";
-      } else {
-        this.search.name = val;
+    this.loadPromo();
+  }
+
+  ionViewDidLeave() {
+    this.events.unsubscribe('promoLoaded');
+  }
+
+  ionViewWillLeave() {
+
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 500,
+      slowdownfactor: 3,
+      slidePixels: 20,
+      iosdelay: 100,
+      androiddelay: 150,
+      fixedPixelsTop: 0,
+      fixedPixelsBottom: 60
+    };
+
+    this.nativePageTransitions.slide(options)
+      .then(() => {
+
+      })
+      .catch((err) => {
+
+      });
+
+  }
+
+
+
+  ionViewDidLoad() {
+
+  }
+
+  loadPromo() {
+    let loader = this.loadingCtrl.create({
+      content: 'Loading Promos..'
+    });
+    loader.present();
+    this.productService.getPromoSlider();
+
+    this.events.subscribe('promoLoaded', () => {
+      this.promoSliders = this.productService.promos;
+      console.log("promoSliders :: ", this.promoSliders)
+      if (this.promoSliders.length > 0) {
+        this.promoImagesLoaded = true;
       }
-    }).catch((err) => {
-      console.log(err)
-    });
+      loader.dismiss();
+    })
   }
 
-  
-  // go to result page
-  doSearch() {
-    this.storage.get('pickup').then((val) => {
-      this.date = this.search.date;
-      this.nav.push(TripsPage, { location: val,date: this.date  });
-    }).catch((err) => {
-      console.log(err)
-    });
+  viewDetail(val: any) {
+    console.log("val::::", val)
+    this.navCtrl.push("StorePage", { val: val });
   }
-
-  // choose place
-  choosePlace(from) {
-    this.nav.push(SearchLocationPage, from);
-  }
-
-  populerplace(val){
-      this.nav.push(TripsPage, { poplocation: val });
-      console.log(val);
-  }
-  // to go account page
-  goToAccount() {
-    this.nav.push(SettingsPage);
-  }
-
-  presentNotifications(myEvent) {
-    console.log(myEvent);
-    let popover = this.popoverCtrl.create(NotificationsPage);
-    popover.present({
-      ev: myEvent
-    });
-  }
-
 }
-
-//

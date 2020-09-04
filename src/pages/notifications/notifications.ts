@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
-import {ViewController} from "ionic-angular";
+import {ViewController, IonicPage} from "ionic-angular";
 
+@IonicPage()
 @Component({
   selector: 'page-notifications',
   templateUrl: 'notifications.html'
