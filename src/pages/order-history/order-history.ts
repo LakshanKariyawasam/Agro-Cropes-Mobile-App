@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController, Events } from 'ionic-angular';
+import { Events, IonicPage, LoadingController, ModalController, NavController, NavParams } from 'ionic-angular';
 import { OrderProvider } from '../../providers/order/order';
-import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -10,7 +9,8 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class OrderHistoryPage {
 
-  userId: any;
+  user: any;
+  orders: any[] = [];
   acceptOrders: any[] = [];
   acceptOrdersCnt: any;
   rejectOrders: any[] = [];
@@ -23,52 +23,64 @@ export class OrderHistoryPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private loadingCtrl: LoadingController,
-    public modalCtrl: ModalController, private orderService: OrderProvider, private userService: UserProvider, public events: Events) {
-    this.userId = JSON.parse(window.localStorage.getItem('user')).userId;
+    public modalCtrl: ModalController, private orderService: OrderProvider, public events: Events) {
+    this.user = JSON.parse(window.localStorage.getItem('user'));
     this.statusChange = 'accepted';
   }
 
 
   ionViewWillEnter() {
-    this.getorders();
+    if (this.user.bisTypeId == 2) {
+      this.getordersWTC();
+    } else {
+      this.getordersVendor();
+    }
   }
 
   ionViewDidLeave() {
-    this.events.unsubscribe('customersLoaded');
-    this.events.unsubscribe('acceptOrderLoaded');
-    this.events.unsubscribe('rejectOrderLoaded');
+    if (this.user.bisTypeId == 2) {
+      this.events.unsubscribe('acceptOrderLoaded');
+      this.events.unsubscribe('rejectOrderLoaded');
+    } else {
+
+    }
   }
 
-  getorders() {
+  getordersWTC() {
     let loader = this.loadingCtrl.create({
       content: 'Loading orders..'
     });
     loader.present();
 
+    this.orderService.getAcceptOrderListByUser(this.user.userId);
+    this.events.subscribe('acceptOrderLoaded', () => {
+      this.acceptOrders = this.orderService.acceptorders;
+      this.acceptOrdersCnt = this.acceptOrders.length;
+      loader.dismiss();
+    })
 
-    this.userService.getUserListByPerentUser(this.userId);
-    this.events.subscribe('customersLoaded', () => {
-      this.customers = this.userService.customers;
-      this.customers.forEach(element => {
-
-        this.orderService.change();
-        this.orderService.getAcceptOrderListByUser(element);
-        this.events.subscribe('acceptOrderLoaded', () => {
-          this.acceptOrders = this.orderService.acceptorders;
-          this.acceptOrdersCnt = this.acceptOrders.length;
-          loader.dismiss();
-        })
-
-        this.orderService.change();
-        this.orderService.getRejectOrderListByUser(element);
-        this.events.subscribe('rejectOrderLoaded', () => {
-          this.rejectOrders = this.orderService.rejectorders;
-          this.rejectOrdersCnt = this.rejectOrders.length;
-          loader.dismiss();
-        })
-      });
-    });
+    this.orderService.change();
+    this.orderService.getRejectOrderListByUser(this.user.userId);
+    this.events.subscribe('rejectOrderLoaded', () => {
+      this.rejectOrders = this.orderService.rejectorders;
+      this.rejectOrdersCnt = this.rejectOrders.length;
+      loader.dismiss();
+    })
   }
+
+  getordersVendor() {
+    let loader = this.loadingCtrl.create({
+      content: 'Loading orders..'
+    });
+    loader.present();
+
+    this.orderService.getOrderListByUser(this.user);
+    this.events.subscribe('ordersLoaded', () => {
+      this.orders = this.orderService.orders;
+      loader.dismiss();
+    })
+  }
+
 
   showDetails(order) {
     this.navCtrl.push("OrderDetailsPage", { order: order, id: 2 });

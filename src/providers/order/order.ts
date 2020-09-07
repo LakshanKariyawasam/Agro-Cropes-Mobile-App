@@ -6,12 +6,16 @@ import { Events } from "ionic-angular";
 export class OrderProvider {
   orderRef = firebase.database().ref("orders");
   orderDetails = firebase.database().ref("ordersdetails");
+  customerRef = firebase.database().ref('customers');
   photoRef = firebase.storage().ref();
 
+  customers: Array<any> = [];
+  orders: Array<any> = [];
   acceptorders: Array<any> = [];
   rejectorders: Array<any> = [];
   pendingorders: Array<any> = [];
   ordersDetails: Array<any> = [];
+  surplusDetails: Array<any> = [];
   a: number;
   constructor(public events: Events) { }
 
@@ -60,42 +64,185 @@ export class OrderProvider {
     this.a = 1;
   }
 
-  getPendingOrderListByUser(user) {
-    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
-      if (this.a == 1) {
-        this.pendingorders = [];
-        this.a++;
-      }
-
+  getPendingOrderListByUserFirst(perentBisId) {
+    this.customerRef.orderByChild('perentBisId').equalTo(perentBisId).once('value', (snap) => {
+      this.customers = [];
+      this.pendingorders = [];
       if (snap.val()) {
-        var tempOrders = snap.val();
-        for (var key in tempOrders) {
-          if (tempOrders[key].acceptStatus == 0) {
-            let singleOrder = {
-              id: key,
-              acceptStatus: tempOrders[key].acceptStatus,
-              dateInserted: tempOrders[key].dateInserted,
-              orderRef: tempOrders[key].orderRef,
-              totalCount: tempOrders[key].totalCount,
-              userName: user.name,
-              mobile: user.mobile,
-              userId: tempOrders[key].userId
-            };
-            this.pendingorders.push(singleOrder);
-          }
+        var tempCustomers = snap.val();
+        for (var key in tempCustomers) {
+          let singleCustomer = {
+            id: key,
+            address: tempCustomers[key].address,
+            email: tempCustomers[key].email,
+            mobile: tempCustomers[key].mobile,
+            name: tempCustomers[key].name,
+            perentBisId: tempCustomers[key].perentBisId,
+            userId: tempCustomers[key].userId
+          };
+
+          this.orderRef.orderByChild('userId').equalTo(singleCustomer.userId).once('value', (snap) => {
+
+            if (snap.val()) {
+              var tempOrders = snap.val();
+              for (var key in tempOrders) {
+                if (tempOrders[key].acceptStatus == 0) {
+                  let singleOrder = {
+                    id: key,
+                    acceptStatus: tempOrders[key].acceptStatus,
+                    dateInserted: tempOrders[key].dateInserted,
+                    orderRef: tempOrders[key].orderRef,
+                    totalCount: tempOrders[key].totalCount,
+                    userName: singleCustomer.name,
+                    mobile: singleCustomer.mobile,
+                    userId: tempOrders[key].userId
+                  };
+                  this.pendingorders.push(singleOrder);
+                }
+              }
+            }
+            this.events.publish('pendingOrderLoadedFirst');
+          })
         }
       }
-      this.events.publish('pendingOrderLoaded');
     })
   }
 
-  getAcceptOrderListByUser(user) {
-    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
-      if (this.a == 1) {
-        this.acceptorders = [];
-        this.a++;
-      }
+  getPendingOrderListByUser(perentBisId) {
+    this.customerRef.orderByChild('perentBisId').equalTo(perentBisId).once('value', (snap) => {
+      this.customers = [];
+      this.pendingorders = [];
+      if (snap.val()) {
+        var tempCustomers = snap.val();
+        for (var key in tempCustomers) {
+          let singleCustomer = {
+            id: key,
+            address: tempCustomers[key].address,
+            email: tempCustomers[key].email,
+            mobile: tempCustomers[key].mobile,
+            name: tempCustomers[key].name,
+            perentBisId: tempCustomers[key].perentBisId,
+            userId: tempCustomers[key].userId
+          };
 
+          this.orderRef.orderByChild('userId').equalTo(singleCustomer.userId).once('value', (snap) => {
+
+            if (snap.val()) {
+              var tempOrders = snap.val();
+              for (var key in tempOrders) {
+                if (tempOrders[key].acceptStatus == 0) {
+                  let singleOrder = {
+                    id: key,
+                    acceptStatus: tempOrders[key].acceptStatus,
+                    dateInserted: tempOrders[key].dateInserted,
+                    orderRef: tempOrders[key].orderRef,
+                    totalCount: tempOrders[key].totalCount,
+                    userName: singleCustomer.name,
+                    mobile: singleCustomer.mobile,
+                    userId: tempOrders[key].userId
+                  };
+                  this.pendingorders.push(singleOrder);
+                }
+              }
+            }
+            this.events.publish('pendingOrderLoaded');
+            this.events.publish('countOrders');
+          })
+        }
+      }
+    })
+  }
+
+  getAcceptOrderListByUser(perentBisId) {
+    this.customerRef.orderByChild('perentBisId').equalTo(perentBisId).once('value', (snap) => {
+      this.customers = [];
+      this.acceptorders = [];
+      if (snap.val()) {
+        var tempCustomers = snap.val();
+        for (var key in tempCustomers) {
+          let singleCustomer = {
+            id: key,
+            address: tempCustomers[key].address,
+            email: tempCustomers[key].email,
+            mobile: tempCustomers[key].mobile,
+            name: tempCustomers[key].name,
+            perentBisId: tempCustomers[key].perentBisId,
+            userId: tempCustomers[key].userId
+          };
+
+          this.orderRef.orderByChild('userId').equalTo(singleCustomer.userId).once('value', (snap) => {
+            if (snap.val()) {
+              var tempOrders = snap.val();
+              for (var key in tempOrders) {
+                if (tempOrders[key].acceptStatus == 1) {
+                  let singleOrder = {
+                    id: key,
+                    acceptStatus: tempOrders[key].acceptStatus,
+                    dateInserted: tempOrders[key].dateInserted,
+                    orderRef: tempOrders[key].orderRef,
+                    totalCount: tempOrders[key].totalCount,
+                    userName: singleCustomer.name,
+                    mobile: singleCustomer.mobile,
+                    userId: tempOrders[key].userId
+                  };
+                  this.acceptorders.push(singleOrder);
+                }
+              }
+            }
+            this.events.publish('acceptOrderLoaded');
+          })
+        }
+      }
+    })
+  }
+
+  getRejectOrderListByUser(perentBisId) {
+    this.customerRef.orderByChild('perentBisId').equalTo(perentBisId).once('value', (snap) => {
+      this.customers = [];
+      this.rejectorders = [];
+      if (snap.val()) {
+        var tempCustomers = snap.val();
+        for (var key in tempCustomers) {
+          let singleCustomer = {
+            id: key,
+            address: tempCustomers[key].address,
+            email: tempCustomers[key].email,
+            mobile: tempCustomers[key].mobile,
+            name: tempCustomers[key].name,
+            perentBisId: tempCustomers[key].perentBisId,
+            userId: tempCustomers[key].userId
+          };
+
+          this.orderRef.orderByChild('userId').equalTo(singleCustomer.userId).once('value', (snap) => {
+
+            if (snap.val()) {
+              var tempOrders = snap.val();
+              for (var key in tempOrders) {
+                if (tempOrders[key].acceptStatus == 3) {
+                  let singleOrder = {
+                    id: key,
+                    acceptStatus: tempOrders[key].acceptStatus,
+                    dateInserted: tempOrders[key].dateInserted,
+                    orderRef: tempOrders[key].orderRef,
+                    totalCount: tempOrders[key].totalCount,
+                    userName: singleCustomer.name,
+                    mobile: singleCustomer.mobile,
+                    userId: tempOrders[key].userId
+                  };
+                  this.rejectorders.push(singleOrder);
+                }
+              }
+            }
+            this.events.publish('rejectOrderLoaded');
+          })
+        }
+      }
+    })
+  }
+
+  getOrderListByUser(user) {
+    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
+      this.orders = [];
       if (snap.val()) {
         var tempOrders = snap.val();
         for (var key in tempOrders) {
@@ -110,42 +257,14 @@ export class OrderProvider {
               mobile: user.mobile,
               userId: tempOrders[key].userId
             };
-            this.acceptorders.push(singleOrder);
+            this.orders.push(singleOrder);
           }
         }
       }
-      this.events.publish('acceptOrderLoaded');
+      this.events.publish('ordersLoaded');
     })
   }
 
-  getRejectOrderListByUser(user) {
-    this.orderRef.orderByChild('userId').equalTo(user.userId).once('value', (snap) => {
-      if (this.a == 1) {
-        this.rejectorders = [];
-        this.a++;
-      }
-
-      if (snap.val()) {
-        var tempOrders = snap.val();
-        for (var key in tempOrders) {
-          if (tempOrders[key].acceptStatus == 3) {
-            let singleOrder = {
-              id: key,
-              acceptStatus: tempOrders[key].acceptStatus,
-              dateInserted: tempOrders[key].dateInserted,
-              orderRef: tempOrders[key].orderRef,
-              totalCount: tempOrders[key].totalCount,
-              userName: user.name,
-              mobile: user.mobile,
-              userId: tempOrders[key].userId
-            };
-            this.rejectorders.push(singleOrder);
-          }
-        }
-      }
-      this.events.publish('rejectOrderLoaded');
-    })
-  }
 
   getOrderDetailsByOrder(order) {
     this.orderDetails.orderByChild('orderRef').equalTo(order.orderRef).once('value', (snap) => {
@@ -163,6 +282,27 @@ export class OrderProvider {
         }
       }
       this.events.publish('orderDetailsLoaded');
+    });
+  }
+
+  getSurplusDetails(userId) {
+    this.orderDetails.orderByChild('userId').equalTo(userId).once('value', (snap) => {
+      this.surplusDetails = [];
+      if (snap.val()) {
+        var tempOrderDetails = snap.val();
+        for (var key in tempOrderDetails) {
+          if (tempOrderDetails[key].acceptStatus == 1) {
+            let singleOrder = {
+              id: key,
+              productName: tempOrderDetails[key].productName,
+              qty: tempOrderDetails[key].qty,
+              thumb: tempOrderDetails[key].thumb
+            };
+            this.surplusDetails.push(singleOrder);
+          }
+        }
+      }
+      this.events.publish('surplusDetailsLoaded');
     });
   }
 

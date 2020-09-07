@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Events, IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { OrderProvider } from '../../providers/order/order';
 
-import { NavParams, IonicPage, Events, ModalController, NavController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -18,14 +19,15 @@ export class TabsPage {
   count1: any;
 
   userId: any;
-  orders: any[];
-  customers: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  pendingorders: any[] = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private orderService: OrderProvider,
     public modalCtrl: ModalController, public events: Events) {
     this.userId = JSON.parse(window.localStorage.getItem('user')).userId;
 
+    this.events.publish('user:tab');
     this.events.subscribe('countOrders', () => {
-
+      this.count1 = this.orderService.pendingorders.length;
     });
 
     this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
@@ -51,5 +53,4 @@ export class TabsPage {
 
   ionViewDidLeave() {
   }
-
 }

@@ -3,19 +3,22 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, MenuController, NavController, ToastController, IonicPage, LoadingController, Events } from "ionic-angular";
 import { UserData } from "../../providers/user-data";
 import { AuthProvider } from "../../providers/auth/auth";
+import { GMailService } from "../../services/email-service";
 
 @IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
+  providers: [GMailService]
 })
 
 export class LoginPage implements OnInit {
   signinform: FormGroup;
   userData = { "username": "", "password": "" };
 
-  constructor(public nav: NavController, public alertCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, public userDataOne: UserData, public authService: AuthProvider,
-    private loadingCtrl: LoadingController, public events: Events) {
+  constructor(public nav: NavController, public alertCtrl: AlertController, public menu: MenuController,
+    public toastCtrl: ToastController, public userDataOne: UserData, public authService: AuthProvider,
+    private loadingCtrl: LoadingController, public events: Events, public gmailService: GMailService) {
     this.menu.swipeEnable(false);
   }
 
@@ -51,6 +54,7 @@ export class LoginPage implements OnInit {
         this.authService.getuserdetails().then((res) => {
           window.localStorage.setItem('user', JSON.stringify(res));
           this.events.publish('user:login');
+          this.gmailService.sendMail('lakshandms@gmail.com', 'test', 'Hi lakshan kohomada');
           this.nav.setRoot('TabsPage', { tabIndex: 0 });
         })
       }

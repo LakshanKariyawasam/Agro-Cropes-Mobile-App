@@ -46,11 +46,22 @@
       </ion-row>
     </div>
 
-    <ion-grid>
+    <ion-grid *ngIf="surplusVal == 0">
       <ion-row>
         <ion-col class="addCart" (click)="addToCart(selectProduct)">
           <button ion-button full color="secondary">
             ADD TO CART
+          </button>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="surplusVal == 1">
+      <ion-row>
+        <ion-col class="addCart" (click)="addSurplus(selectProduct)">
+          <button ion-button full color="secondary">
+            ADD SURPLUS
           </button>
 
         </ion-col>

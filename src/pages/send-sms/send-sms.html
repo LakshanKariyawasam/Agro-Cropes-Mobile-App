@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Send SMS</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <h2 ion-text class="text-primary">
+    <strong>Agro Cropes! Do you want a send sms for testing.</strong>
+  </h2>
+
+  <ion-row no-padding>
+    <button ion-button icon-left small full color="light" menuClose (click)="sendSms()">
+      <ion-icon name="contact"></ion-icon>
+      Send SMS
+    </button>
+  </ion-row>
+</ion-content>

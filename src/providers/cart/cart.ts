@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import firebase from 'firebase';
 
 const CART_KEY = 'cartItems';
 
@@ -9,6 +10,9 @@ export class CartProvider {
   constructor(public storage: Storage) {
 
   }
+
+
+  surplusRef = firebase.database().ref('surplus');
 
   addToCart(product) {
     return this.getCartItems().then(result => {
@@ -21,8 +25,8 @@ export class CartProvider {
           let prevQuantity = parseInt(result[index].count);
           product.count = (prevQuantity + product.count);
           let currentPrice = (parseInt(product.totalPrice) * product.count);
-          product.totalPrice =currentPrice;
-           result.splice(index, 1);
+          product.totalPrice = currentPrice;
+          result.splice(index, 1);
           result.push(product);
           return this.storage.set(CART_KEY, result);
         }
@@ -31,6 +35,23 @@ export class CartProvider {
         return this.storage.set(CART_KEY, [product]);
       }
     })
+  }
+
+  addSurplus(surplusObj: any) {
+    var promise = new Promise((resolve, reject) => {
+      let surplusObject = {
+        acceptStatus: 0,
+        userId: surplusObj.userId,
+        userName: surplusObj.name,
+        totalCount: surplusObj.count,
+        dateInserted: new Date().toLocaleDateString()
+      };
+      console.log('surplusObject :::', surplusObject);
+      this.surplusRef.push(surplusObject).then(() => {
+        resolve({ success: true });
+      })
+    });
+    return promise;
   }
 
   removeFromCart(product) {

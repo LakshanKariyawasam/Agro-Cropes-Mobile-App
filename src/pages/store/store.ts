@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, IonicPage, ToastController, Content, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Events, IonicPage, ToastController, Content, LoadingController, AlertController } from 'ionic-angular';
 import { ProductsProvider } from '../../providers/products/products';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { CartProvider } from '../../providers/cart/cart';
@@ -19,6 +19,7 @@ import { CartProvider } from '../../providers/cart/cart';
 export class StorePage {
 
   products: any[];
+  fruits: any[];
   productRows: any;
   fruitsRows: any;
   selectProduct: any;
@@ -30,15 +31,19 @@ export class StorePage {
 
   ratingValue: number = 3;
 
+  surplusVal: number = 0;
+
   @ViewChild('pageTop') pageTop: Content;
-  fruits: any;
 
   constructor(public navCtrl: NavController,
     private productService: ProductsProvider,
     private loadingCtrl: LoadingController,
-    private events: Events, private nativePageTransitions: NativePageTransitions,
+    private events: Events, private nativePageTransitions: NativePageTransitions, public alertCtrl: AlertController,
     public navParams: NavParams, public toastCtrl: ToastController, private cartService: CartProvider) {
     if (this.navParams.get("val") == 'Vegetables') {
+      this.loadProducts();
+    } else if (this.navParams.get("val") == 'Surplus Vegitable') {
+      this.surplusVal = 1;
       this.loadProducts();
     } else {
       this.loadFruits();
@@ -142,12 +147,10 @@ export class StorePage {
     if (this.productCount > 1) {
       this.productCount--;
     }
-
   }
 
   incrementProductCount() {
     this.productCount++;
-
   }
 
   addToCart(product) {
@@ -164,6 +167,44 @@ export class StorePage {
     });
   }
 
+  addSurplus(product) {
+    let loader = this.loadingCtrl.create({
+      content: 'Adding Surplus..'
+    });
+    loader.present();
+
+    let cartProduct = {
+      product_id: product.id,
+      name: product.name,
+      thumb: product.thumb,
+      count: this.productCount
+    };
+
+    this.cartService.addSurplus(cartProduct)
+      .then((response: any) => {
+        if (response.success == true) {
+          loader.dismiss();
+          this.presentAlert("Surplus Added Sucsessfully, An order has been sent to vendors registered mobile/email");
+        }
+      })
+      .catch(err => {
+        alert(JSON.stringify(err));
+      });
+  }
+
+  presentAlert(message) {
+    let alert = this.alertCtrl.create({
+      title: 'Auth Success',
+      subTitle: message,
+      buttons: ['Close']
+    });
+
+    alert.onDidDismiss(res => {
+      this.navCtrl.pop();
+      this.navCtrl.push('SurplusPage');
+    });
+    alert.present();
+  }
 
   presentToast(name) {
     let toast = this.toastCtrl.create({

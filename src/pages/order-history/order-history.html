@@ -6,7 +6,7 @@
     <ion-title>Order History</ion-title>
   </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar *ngIf="user.bisTypeId == 2">
     <ion-segment [(ngModel)]="statusChange" color="light">
       <ion-segment-button value="accepted">
         Accepted &nbsp;<span
@@ -22,25 +22,47 @@
 
 
 <ion-content padding>
+  <div *ngIf="user.bisTypeId != 2">
+    <ion-card *ngFor="let order of orders" width-50 (click)="showDetails(order)">
+      <ion-card-content>
+        <p style="float: left;">
+          <span style="font-weight: bold;">Order Ref :</span>{{order.orderRef}}
+        </p>
+        <br>
+        <p style="float: right;">
+          <span style="font-weight: bold;">Order Qty :</span>{{order.totalCount}}
+        </p>
+        <br>
+        <p style="float: left;">
+          <span style="font-weight: bold;">Vendor Name :</span>{{order.userName}}
+        </p>
+        <br>
+        <br>
+        <p style="float: right;">
+          <span style="font-weight: bold;">Vendor Mobile :</span>{{order.mobile}}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <div [ngSwitch]="statusChange">
     <ion-grid *ngSwitchCase="'accepted'">
       <ion-card *ngFor="let order of acceptOrders" width-50 (click)="showDetails(order)">
         <ion-card-content>
           <p style="float: left;">
-            Order Ref :{{order.orderRef}}
+            <span style="font-weight: bold;">Order Ref :</span>{{order.orderRef}}
           </p>
           <br>
           <p style="float: right;">
-            Order Qty :{{order.totalCount}}
+            <span style="font-weight: bold;">Order Qty :</span>{{order.totalCount}}
           </p>
           <br>
           <p style="float: left;">
-            Vendor Name :{{order.userName}}
+            <span style="font-weight: bold;">Vendor Name :</span>{{order.userName}}
           </p>
           <br>
           <br>
           <p style="float: right;">
-            Vendor Mobile :{{order.mobile}}
+            <span style="font-weight: bold;">Vendor Mobile :</span>{{order.mobile}}
           </p>
         </ion-card-content>
       </ion-card>
@@ -50,20 +72,20 @@
       <ion-card *ngFor="let order of rejectOrders" width-50 (click)="showDetails(order)">
         <ion-card-content>
           <p style="float: left;">
-            Order Ref :{{order.orderRef}}
+            <span style="font-weight: bold;">Order Ref :</span>{{order.orderRef}}
           </p>
           <br>
           <p style="float: right;">
-            Order Qty :{{order.totalCount}}
+            <span style="font-weight: bold;">Order Qty :</span>{{order.totalCount}}
           </p>
           <br>
           <p style="float: left;">
-            Vendor Name :{{order.userName}}
+            <span style="font-weight: bold;">Vendor Name :</span>{{order.userName}}
           </p>
           <br>
           <br>
           <p style="float: right;">
-            Vendor Mobile :{{order.mobile}}
+            <span style="font-weight: bold;">Vendor Mobile :</span>{{order.mobile}}
           </p>
         </ion-card-content>
       </ion-card>
