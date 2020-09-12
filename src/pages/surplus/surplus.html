@@ -8,10 +8,10 @@
 
   <ion-toolbar *ngIf="user.bisTypeId == 2">
     <ion-segment [(ngModel)]="statusChange" color="light">
-      <ion-segment-button value="accepted">
+      <ion-segment-button value="currunt">
         Currunt &nbsp;
       </ion-segment-button>
-      <ion-segment-button value="rejected">
+      <ion-segment-button value="old">
         Old &nbsp;<span
           style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{oldCnt}}</span>
       </ion-segment-button>
@@ -22,16 +22,16 @@
 
 <ion-content padding>
   <div [ngSwitch]="statusChange">
-    <ion-grid *ngSwitchCase="'currunt'">
+    <ion-grid *ngSwitchCase="'currunt'" style="height: 500px;">
       <ion-row>
         <ion-col (click)="addVegiSurplus()">
-          <button ion-button full color="secondary">
+          <button ion-button full color="secondary" [disabled]="surplusCnt > 0">
             VEGITABLE SURPLUS
           </button>
         </ion-col>
       </ion-row>
 
-      <ion-content padding *ngIf="surplusDetails != []">
+      <ion-content padding>
         <ion-card *ngFor="let itm of  surplusDetails">
           <ion-card-content>
             <ion-row>
@@ -68,7 +68,7 @@
       </ion-content>
     </ion-grid>
 
-    <ion-grid *ngSwitchCase="'old'">
+    <ion-grid *ngSwitchCase="'old'" style="height: 500px;">
       <ion-card *ngFor="let order of rejectOrders" width-50 (click)="showDetails(order)">
         <ion-card-content>
           <p style="float: left;">

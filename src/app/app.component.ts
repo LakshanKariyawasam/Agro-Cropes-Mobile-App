@@ -65,6 +65,7 @@ export class MyApp {
           { title: 'Order History', component: 'OrderHistoryPage', icon: 'basket' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
           // { title: 'Show Tutorial', component: 'TutorialPage', icon: 'ios-hammer' },
+          { title: 'Show Weather', component: 'LocalWeatherPage', icon: 'ios-cloud' },
         ];
       } else {
         this.appMenuItems = [
@@ -75,6 +76,7 @@ export class MyApp {
           { title: 'User Maintenance', component: 'UsersPage', icon: 'ios-people' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
           { title: 'Send SMS', component: 'SendSmsPage', icon: 'ios-send' },
+          { title: 'Show Weather', component: 'LocalWeatherPage', icon: 'ios-cloud' },
         ];
       }
     });

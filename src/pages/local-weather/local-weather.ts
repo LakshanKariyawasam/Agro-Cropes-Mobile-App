@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { WeatherProvider } from '../../services/weather';
 import { Storage } from '@ionic/storage';
 // import { HttpErrorResponse } from '@angular/common/http';
 
+@IonicPage()
 @Component({
   selector: 'page-local-weather',
   templateUrl: 'local-weather.html'
@@ -16,18 +17,10 @@ export class LocalWeatherPage {
   }
 
   public locationList: Array<any> = [
-    {city: 'Colombo', state: 'Sri Lanka'},
-    {city: 'Matara', state: 'Sri Lanka'},
-    {city: 'Galle', state: 'Sri Lanka'},
-    {city: 'Kandy', state: 'Sri Lanka'},
-    {city: 'Jaffna', state: 'Sri Lanka'},
-    {city: 'Chavakachcheri', state: 'Sri Lanka'},
-    {city: 'Batticaloa', state: 'Sri Lanka'},
-    {city: 'Badulla', state: 'Sri Lanka'},
-    {city: 'Anuradhapura', state: 'Sri Lanka'},
-    {city: 'Monaragala', state: 'Sri Lanka'},
-    {city: 'Ratnapura', state: 'Sri Lanka'},
-    {city: 'Nuwara Eliya', state: 'Sri Lanka'}
+    { city: 'Monaragala', state: 'Sri Lanka' },
+    { city: 'Bibile', state: 'Sri Lanka' },
+    { city: 'Padiyathalawa', state: 'Sri Lanka' },
+    { city: 'Badulla', state: 'Sri Lanka' }
   ]
 
   constructor(

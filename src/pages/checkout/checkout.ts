@@ -17,6 +17,7 @@ export class CheckoutPage {
   totalCnt: number = 0;
   customerName: any;
   selectdate: string;
+  bisTypeId: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,6 +27,7 @@ export class CheckoutPage {
     private orderService: OrderProvider
   ) {
     this.loadCartItems();
+    this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
   }
 
   loadCartItems() {
@@ -88,7 +90,12 @@ export class CheckoutPage {
 
       this.orderService.placeOrder(orderObj).then(() => {
         loader.dismiss();
-        this.navCtrl.setRoot('HomePage');
+        this.cartService.removeAllCartItems();
+        if (this.bisTypeId == 2) {
+          this.navCtrl.setRoot('DashboardPage');
+        } else {
+          this.navCtrl.setRoot('HomePage');
+        }
       });
     } else {
       loader.dismiss();

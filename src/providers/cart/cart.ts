@@ -37,13 +37,15 @@ export class CartProvider {
     })
   }
 
-  addSurplus(surplusObj: any) {
+  addSurplus(surplusObj) {
     var promise = new Promise((resolve, reject) => {
       let surplusObject = {
         acceptStatus: 0,
         userId: surplusObj.userId,
-        userName: surplusObj.name,
-        totalCount: surplusObj.count,
+        productName: surplusObj.name,
+        qty: surplusObj.count,
+        realQty: surplusObj.count,
+        thumb: surplusObj.thumb,
         dateInserted: new Date().toLocaleDateString()
       };
       console.log('surplusObject :::', surplusObject);

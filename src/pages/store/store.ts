@@ -3,6 +3,7 @@ import { NavController, NavParams, Events, IonicPage, ToastController, Content, 
 import { ProductsProvider } from '../../providers/products/products';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { CartProvider } from '../../providers/cart/cart';
+import firebase from 'firebase';
 
 /**
  * Generated class for the StorePage page.
@@ -135,6 +136,8 @@ export class StorePage {
 
     if (this.type == 'Vegetables') {
       this.selectProduct = product;
+    } else if (this.type == 'Surplus Vegitable') {
+      this.selectProduct = product;
     } else {
       this.selectProduct = product;
     }
@@ -168,33 +171,33 @@ export class StorePage {
   }
 
   addSurplus(product) {
+    console.log("cartProduct:: ", product);
     let loader = this.loadingCtrl.create({
-      content: 'Adding Surplus..'
+      content: "Placing Surplus.."
     });
     loader.present();
+    var user = firebase.auth().currentUser;
+    if (user) {
+      let cartProduct = {
+        userId: user.uid,
+        product_id: product.id,
+        name: product.name,
+        thumb: product.thumb,
+        count: this.productCount
+      };
 
-    let cartProduct = {
-      product_id: product.id,
-      name: product.name,
-      thumb: product.thumb,
-      count: this.productCount
-    };
-
-    this.cartService.addSurplus(cartProduct)
-      .then((response: any) => {
-        if (response.success == true) {
-          loader.dismiss();
-          this.presentAlert("Surplus Added Sucsessfully, An order has been sent to vendors registered mobile/email");
-        }
-      })
-      .catch(err => {
-        alert(JSON.stringify(err));
+      this.cartService.addSurplus(cartProduct).then(() => {
+        loader.dismiss();
+        this.presentAlert("Surplus Added Sucsessfully, An order has been sent to vendors registered mobile/email");
       });
+    } else {
+      loader.dismiss();
+    }
   }
 
   presentAlert(message) {
     let alert = this.alertCtrl.create({
-      title: 'Auth Success',
+      title: 'Order Success',
       subTitle: message,
       buttons: ['Close']
     });

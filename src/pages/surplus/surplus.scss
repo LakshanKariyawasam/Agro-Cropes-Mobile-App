@@ -1,3 +1,56 @@
 page-surplus {
 
+    .profile-bg {
+        color: linear-gradient(135deg, color($colors, dark), color($colors, primary), color($colors, light));
+    }
+
+    .product-detail {
+        height: 55%;
+        position: relative; //    border-bottom: 1.5px solid #e4e4e4;
+        .slide-zoom {
+            height: 100%;
+            img {
+                width: 50%;
+            }
+        }
+        .action-btn-wrap {
+            position: absolute;
+            bottom: -22px;
+            z-index: 1000;
+            right: 2px;
+        }
+        .wish-list-btn,
+        .share-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .qty{
+             padding-top: 13px;
+        }
+    }
+
+    ion-content {
+        
+        fixed-content {
+            
+            // background: color($colors,contentbg);
+      
+            .grid{
+                .col{
+                    padding:1px;
+                    ion-card{                        
+                        border-radius: 0;
+                        width: 100%;
+                        margin: 1px;
+                        ion-card-content{
+                            padding: 1px 13px;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
 }

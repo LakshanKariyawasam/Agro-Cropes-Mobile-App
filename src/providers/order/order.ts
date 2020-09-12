@@ -9,6 +9,11 @@ export class OrderProvider {
   customerRef = firebase.database().ref('customers');
   photoRef = firebase.storage().ref();
 
+
+  surplusRef = firebase.database().ref('surplus');
+  surplusDetailsRef = firebase.database().ref('surplusDetails');
+
+
   customers: Array<any> = [];
   orders: Array<any> = [];
   acceptorders: Array<any> = [];
@@ -286,17 +291,17 @@ export class OrderProvider {
   }
 
   getSurplusDetails(userId) {
-    this.orderDetails.orderByChild('userId').equalTo(userId).once('value', (snap) => {
+    this.surplusRef.orderByChild('userId').equalTo(userId).once('value', (snap) => {
       this.surplusDetails = [];
       if (snap.val()) {
-        var tempOrderDetails = snap.val();
-        for (var key in tempOrderDetails) {
-          if (tempOrderDetails[key].acceptStatus == 1) {
+        var tempSurplusDetails = snap.val();
+        for (var key in tempSurplusDetails) {
+          if (tempSurplusDetails[key].acceptStatus == 0) {
             let singleOrder = {
               id: key,
-              productName: tempOrderDetails[key].productName,
-              qty: tempOrderDetails[key].qty,
-              thumb: tempOrderDetails[key].thumb
+              productName: tempSurplusDetails[key].productName,
+              qty: tempSurplusDetails[key].qty,
+              thumb: tempSurplusDetails[key].thumb
             };
             this.surplusDetails.push(singleOrder);
           }
@@ -311,6 +316,42 @@ export class OrderProvider {
       firebase.database().ref('orders/' + order.id + '/acceptStatus').set(1).then(() => {
         resolve(true);
       })
+    });
+    return promise;
+  }
+
+  acceptSurpluseOrder(qty: number, order: any, userId: any) {
+    var promise = new Promise((resolve, reject) => {
+      let availableQty = order.qty - qty;
+      if (availableQty == 0) {
+        firebase.database().ref('surplus/' + order.id + '/acceptStatus').set(1).then(() => {
+          firebase.database().ref('surplus/' + order.id + '/qty').set(availableQty).then(() => {
+            let surplusObject = {
+              userId: userId,
+              productName: order.productName,
+              qty: qty,
+              thumb: order.thumb,
+              dateInserted: new Date().toLocaleDateString()
+            };
+            this.surplusDetailsRef.push(surplusObject).then(() => {
+              resolve({ success: true });
+            })
+          })
+        })
+      } else {
+        firebase.database().ref('surplus/' + order.id + '/qty').set(availableQty).then(() => {
+          let surplusObject = {
+            userId: userId,
+            productName: order.productName,
+            qty: qty,
+            thumb: order.thumb,
+            dateInserted: new Date().toLocaleDateString()
+          };
+          this.surplusDetailsRef.push(surplusObject).then(() => {
+            resolve({ success: true });
+          })
+        })
+      }
     });
     return promise;
   }

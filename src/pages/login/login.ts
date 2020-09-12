@@ -35,6 +35,7 @@ export class LoginPage implements OnInit {
 
   // login and go to home page
   login() {
+    window.localStorage.clear();
     let loader = this.loadingCtrl.create({
       content: 'Authenticating..'
     });

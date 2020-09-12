@@ -19,6 +19,7 @@ export class SurplusPage {
   user: any;
   surplusDetails: any[];
   statusChange: any;
+  surplusCnt: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController, private orderService: OrderProvider, public events: Events) {
     this.user = JSON.parse(window.localStorage.getItem('user'));
@@ -45,8 +46,9 @@ export class SurplusPage {
 
     this.orderService.getSurplusDetails(this.user.userId);
     this.events.subscribe('surplusDetailsLoaded', () => {
-      this.surplusDetails = this.orderService.ordersDetails;
-
+      this.surplusDetails = this.orderService.surplusDetails;
+      this.surplusCnt = this.surplusDetails.length;
+      console.log("surplusDetails::: ", this.surplusDetails)
       loader.dismiss();
     })
   }

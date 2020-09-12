@@ -32,12 +32,6 @@ import { MyApp } from "./app.component";
 import { UserProvider } from '../providers/user/user';
 
 
-
-
-
-
-
-
 firebase.initializeApp(config.firebaseConfig);
 
 // import services
