@@ -61,4 +61,46 @@ page-dashboard {
         }
       }
     }
+
+    section {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      // height: vh;
+    }
+    
+    .progressbar__path {
+      fill: transparent;
+      stroke: #FF8A65;
+      stroke-width: 10;
+    }
+    .progressbar__fill {
+      transition: stroke-dashoffset 1s;
+      transform: rotate(-90deg);
+      transform-origin: center;
+      fill: transparent;
+      stroke: #FF3D00;
+      stroke-dasharray: 0;
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      stroke-width: 10;
+    }
+    .progressbar__title {
+      font-size: 18px;
+      alignment-baseline: central;
+      text-anchor: middle;
+    }
+
+    .font1 {
+      font-size: x-large;
+      font-family: -webkit-pictograph;
+    }
+
+    .font2 {
+      font-size: xx-large;
+      font-family: -webkit-pictograph;
+      margin-left: 5%;
+    }
+    
 }

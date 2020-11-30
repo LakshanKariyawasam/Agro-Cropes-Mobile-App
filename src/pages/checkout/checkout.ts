@@ -18,6 +18,7 @@ export class CheckoutPage {
   customerName: any;
   selectdate: string;
   bisTypeId: any;
+  perentBisId: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -27,6 +28,7 @@ export class CheckoutPage {
     private orderService: OrderProvider
   ) {
     this.loadCartItems();
+    this.perentBisId = JSON.parse(window.localStorage.getItem('user')).perentBisId;
     this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
   }
 
@@ -82,6 +84,7 @@ export class CheckoutPage {
     if (user) {
       let orderObj = {
         userId: user.uid,
+        perentBisId: this.perentBisId,
         name: this.customerName,
         count: this.totalCnt,
         orders: this.cartItems,

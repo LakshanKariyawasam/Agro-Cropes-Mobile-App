@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Orders</ion-title>
+    <ion-title>ORDERS</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,20 +12,24 @@
     <ion-card *ngFor="let order of pendingorders" width-50 (click)="showDetails(order)">
       <ion-card-content>
         <p style="float: left;">
-          Order Ref :{{order.orderRef}}
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Order Ref
+            :</span>{{order.orderRef}}
         </p>
         <br>
         <p style="float: right;">
-          Order Qty :{{order.totalCount}}
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Order Qty
+            :</span>{{order.totalCount}}
         </p>
         <br>
         <p style="float: left;">
-          Vendor Name :{{order.userName}}
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Vendor Name
+            :</span>{{order.userName}}
         </p>
         <br>
         <br>
         <p style="float: right;">
-          Vendor Mobile :{{order.mobile}}
+          <span style="font-weight: bold; font-size: large; font-variant: all-petite-caps;">Vendor Mobile
+            :</span>{{order.mobile}}
         </p>
       </ion-card-content>
     </ion-card>

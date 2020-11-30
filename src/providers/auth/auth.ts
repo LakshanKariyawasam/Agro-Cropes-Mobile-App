@@ -6,6 +6,8 @@ import firebase from "firebase";
 export class AuthProvider {
 
   firedata = firebase.database().ref('/customers');
+  versionRef = firebase.database().ref('/version');
+
   // public employeeListRef: Reference;
   // authState: any;
   constructor(public events: Events) {
@@ -144,6 +146,14 @@ export class AuthProvider {
       })
     })
     return promise;
+  }
+
+  getupdatedetails(version) {
+    return this.versionRef.orderByChild('status').equalTo(1).once('value').then(function (snap) {
+      if (snap.val()) {
+        return snap.val();
+      }
+    });
   }
 
 

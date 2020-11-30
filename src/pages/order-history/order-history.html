@@ -3,17 +3,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Order History</ion-title>
+    <ion-title>ORDER HISTORY</ion-title>
   </ion-navbar>
 
   <ion-toolbar *ngIf="user.bisTypeId == 2">
     <ion-segment [(ngModel)]="statusChange" color="light">
       <ion-segment-button value="accepted">
-        Accepted &nbsp;<span
+        ACCEPTED &nbsp;<span
           style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{acceptOrdersCnt}}</span>
       </ion-segment-button>
       <ion-segment-button value="rejected">
-        Rejected &nbsp;<span
+        REJECTED &nbsp;<span
           style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{rejectOrdersCnt}}</span>
       </ion-segment-button>
     </ion-segment>

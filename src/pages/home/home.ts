@@ -97,7 +97,6 @@ export class HomePage {
       if (this.surplusDetails.length > 0) {
         console.log("surplusDetails::: ", this.surplusDetails)
         this.presentAlert("You have new surpluse from WTC with " + this.surplusDetails[0].productName + " , " + this.surplusDetails[0].qty + "Kg. Please accept the order.");
-
       }
     })
   }
@@ -124,7 +123,7 @@ export class HomePage {
               let toast = this.toastCtrl.create({
                 message: 'Your input is invalid. Please input numbers.',
                 showCloseButton: true,
-                duration: 3000
+                duration: 1000
               });
               toast.present();
               return false;
@@ -132,7 +131,7 @@ export class HomePage {
               let toast = this.toastCtrl.create({
                 message: 'Your input is greater than the ordered count.',
                 showCloseButton: true,
-                duration: 3000
+                duration: 1000
               });
               toast.present();
               return false;
@@ -142,14 +141,13 @@ export class HomePage {
               });
               loader.present();
 
-              let me = this;
               this.orderService.acceptSurpluseOrder(inputs.quantity, this.surplusDetails[0], this.user.userId).then(() => {
                 loader.dismiss();
 
                 let toast = this.toastCtrl.create({
                   message: 'Order Accept Sucsessfully.',
                   showCloseButton: true,
-                  duration: 3000
+                  duration: 1000
                 });
                 toast.present();
               });

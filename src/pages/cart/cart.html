@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Your Cart
+      CART
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -61,7 +61,7 @@
   <ion-grid>
     <ion-row>
       <ion-col class="addCart" (click)="checkOut()">
-        <button round=true ion-button full color="secondary">
+        <button round=true ion-button full color="secondary" [disabled]="totalCount == 0">
           {{totalCount}} kg &nbsp; &nbsp; Checkout
         </button>
 

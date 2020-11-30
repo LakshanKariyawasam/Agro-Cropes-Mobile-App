@@ -53,6 +53,11 @@ export class MyApp {
 
     this.getCategories();
 
+
+    this.events.subscribe('user:update', () => {
+      this.name = JSON.parse(window.localStorage.getItem('user')).name;
+    });
+
     this.events.subscribe('user:login', () => {
       this.bisTypeId = JSON.parse(window.localStorage.getItem('user')).bisTypeId;
 
@@ -60,7 +65,7 @@ export class MyApp {
 
       if (this.bisTypeId != 2) {
         this.appMenuItems = [
-          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          // { title: 'Home', component: 'TabsPage', icon: 'home' },
           { title: 'Store', component: 'StorePage', icon: 'ios-archive' },
           { title: 'Order History', component: 'OrderHistoryPage', icon: 'basket' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
@@ -69,13 +74,13 @@ export class MyApp {
         ];
       } else {
         this.appMenuItems = [
-          { title: 'Home', component: 'TabsPage', icon: 'home' },
+          // { title: 'Home', component: 'TabsPage', icon: 'home' },
           { title: 'Store', component: 'HomePage', icon: 'ios-archive' },
           { title: 'Surplus', component: 'SurplusPage', icon: 'ios-archive' },
           { title: 'Order History', component: 'OrderHistoryPage', icon: 'basket' },
           { title: 'User Maintenance', component: 'UsersPage', icon: 'ios-people' },
           { title: 'Settings', component: 'SettingsPage', icon: 'ios-settings' },
-          { title: 'Send SMS', component: 'SendSmsPage', icon: 'ios-send' },
+          // { title: 'Send SMS', component: 'SendSmsPage', icon: 'ios-send' },
           { title: 'Show Weather', component: 'LocalWeatherPage', icon: 'ios-cloud' },
         ];
       }

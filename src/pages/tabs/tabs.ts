@@ -16,7 +16,7 @@ export class TabsPage {
   mySelectedIndex: number;
   bisTypeId: any = 3;
 
-  count1: any;
+  count1: any = 5;
 
   userId: any;
   pendingorders: any[] = [];
@@ -27,6 +27,7 @@ export class TabsPage {
 
     this.events.publish('user:tab');
     this.events.subscribe('countOrders', () => {
+      this.count1 = 0;
       this.count1 = this.orderService.pendingorders.length;
     });
 

@@ -23,9 +23,9 @@ export class CartPage {
     public navParams: NavParams,
     private cartService: CartProvider,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.totalCount = 0;
     this.isEmptyCart = true;
     this.isCartItemLoaded = false;
@@ -43,13 +43,14 @@ export class CartPage {
       .then(val => {
         this.cartItems = val;
 
+        console.log('cart :::', this.cartItems);
         if (this.cartItems.length > 0) {
           this.cartItems.forEach((v, indx) => {
             this.totalCount += parseInt(v.count);
           });
           this.isEmptyCart = false;
-          console.log("isEmptyCart :::",this.isEmptyCart);
-          console.log("totalCount :::",this.totalCount);
+          console.log("isEmptyCart :::", this.isEmptyCart);
+          console.log("totalCount :::", this.totalCount);
         }
 
         this.isCartItemLoaded = true;
@@ -70,7 +71,8 @@ export class CartPage {
   }
 
   removeItem(itm) {
-    this.cartService.removeFromCart(itm).then(() => {
+    console.log("itm ::: ", itm)
+    this.cartService.removeFromCart(itm,this.cartItems).then(() => {
       this.loadCartItems();
     });
   }

@@ -17,10 +17,10 @@ export class LocalWeatherPage {
   }
 
   public locationList: Array<any> = [
-    { city: 'Monaragala', state: 'Sri Lanka' },
-    { city: 'Bibile', state: 'Sri Lanka' },
-    { city: 'Padiyathalawa', state: 'Sri Lanka' },
-    { city: 'Badulla', state: 'Sri Lanka' }
+    { city: 'Los Angeles', state: 'CA' },
+    { city: 'Miami', state: 'FL' },
+    { city: 'New York', state: 'NY' },
+    { city: 'Seattle', state: 'WA' }
   ]
 
   constructor(
@@ -37,8 +37,8 @@ export class LocalWeatherPage {
 
       } else {
         this.location = {
-          state: 'Sri Lanka',
-          city: 'Colombo'
+          state: 'NY',
+          city: 'New York'
         }
       }
 

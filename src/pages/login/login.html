@@ -5,9 +5,9 @@
     <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown">
       <div class="logo"></div>
-      <h2 ion-text class="text-primary">
-        <strong>Agro Cropes</strong>
-      </h2>
+      <h1 ion-text class="text-primary">
+        <strong>Sign In</strong>
+      </h1>
     </div>
 
     <!-- Login form -->
@@ -66,11 +66,12 @@
         </ion-item>
 
         <ion-item>
-          <button type="submit" ion-button block color="primary" [disabled]="signinform.invalid">LOGIN</button>
+          <button type="submit" ion-button block color="dark" [disabled]="signinform.invalid">LOGIN</button>
         </ion-item>
       </form>
-      <button ion-button clear class="text-white" (click)="showRegisterPage()" style="float: right;margin-top:0">Register</button>
-        
+      <button ion-button clear color="max" (click)="showRegisterPage()"
+        style="float: right;margin-top:0">Register</button>
+
     </ion-list>
 
 
@@ -78,4 +79,12 @@
     <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>
 
   </div>
+
+  <br>
+  <div class="version-text" *ngIf="updateButtonEnable">
+    <p style="color: red">This app is outdated. You must have to update it latest version</p>
+    <button ion-button full (click)="updateApp()" color="SFADarkBlue">Update</button>
+  </div>
+  <div *ngIf="!updateButtonEnable" class="version-text">{{version}}</div>
+
 </ion-content>

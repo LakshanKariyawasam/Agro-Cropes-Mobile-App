@@ -100,13 +100,9 @@ export class OrderDetailsPage {
     let toast = this.toastCtrl.create({
       message: `${name} has been added to cart`,
       showCloseButton: true,
+      duration: 1000
       // closeButtonText: 'View Cart'
     });
-
-    // toast.onDidDismiss(() => {
-    //   this.navCtrl.setRoot('TabsPage', { tabIndex: 1 });
-    //   // this.navCtrl.push('CartPage');
-    // });
     toast.present();
   }
 

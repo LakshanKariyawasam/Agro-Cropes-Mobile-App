@@ -26,6 +26,9 @@
     "@ionic-native/device": "^4.3.3",
     "@ionic-native/email-composer": "^4.20.0",
     "@ionic-native/facebook": "^4.10.0",
+    "@ionic-native/file": "^4.20.0",
+    "@ionic-native/file-opener": "^4.20.0",
+    "@ionic-native/file-transfer": "^4.20.0",
     "@ionic-native/fingerprint-aio": "^4.10.0",
     "@ionic-native/google-maps": "^4.9.1",
     "@ionic-native/keyboard": "^4.12.0",
@@ -39,6 +42,7 @@
     "@types/google-maps": "^3.2.0",
     "angular2-text-mask": "^9.0.0",
     "call-number": "^1.0.1",
+    "chart.js": "^2.9.3",
     "cordova-ios": "^4.5.4",
     "cordova-plugin-android-fingerprint-auth": "^1.4.4",
     "cordova-plugin-console": "^1.1.0",
@@ -62,6 +66,7 @@
     "minimist": "^1.2.5",
     "nexmo": "^2.9.1",
     "ng-lottie": "^0.3.2",
+    "ng2-charts": "^2.2.5",
     "nodemailer": "^6.4.11",
     "properties-parser": "^0.3.1",
     "rxjs": "5.5.2",
@@ -73,9 +78,13 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.8",
     "@types/googlemaps": "^3.30.11",
-    "@types/node": "^14.10.1",
     "cordova-android": "^9.0.0",
+    "cordova-plugin-androidx-adapter": "^1.1.1",
     "cordova-plugin-email-composer": "^0.9.2",
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file-opener2": "^3.0.5",
+    "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova.plugins.diagnostic": "^6.0.2",
     "mx.ferreyra.callnumber": "0.0.2",
     "typescript": "2.4.2"
   },
@@ -102,6 +111,15 @@
       "call-number": {},
       "cordova-plugin-email-composer": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-file-opener2": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova.plugins.diagnostic": {
+        "ANDROIDX_VERSION": "1.+"
       }
     },
     "platforms": [

@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Surplus</ion-title>
+    <ion-title>SURPLUS</ion-title>
   </ion-navbar>
 
   <ion-toolbar *ngIf="user.bisTypeId == 2">
@@ -13,7 +13,7 @@
       </ion-segment-button>
       <ion-segment-button value="old">
         Old &nbsp;<span
-          style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{oldCnt}}</span>
+          style="color: white; padding: 5px; background-color: red; margin-top: -8px; border-radius: 5px;">{{oldsurplusCnt}}</span>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -25,7 +25,7 @@
     <ion-grid *ngSwitchCase="'currunt'" style="height: 500px;">
       <ion-row>
         <ion-col (click)="addVegiSurplus()">
-          <button ion-button full color="secondary" [disabled]="surplusCnt > 0">
+          <button ion-button full color="secondary" *ngIf="surplusCnt == 0">
             VEGITABLE SURPLUS
           </button>
         </ion-col>
@@ -59,7 +59,7 @@
         <ion-grid>
           <ion-row>
             <ion-col text-right>
-              <button round=true ion-button full color="danger" (click)="rejectOrder()">
+              <button round=true ion-button full color="danger" (click)="rejectOrder()" *ngIf="surplusCnt > 0">
                 Finish
               </button>
             </ion-col>
@@ -69,26 +69,36 @@
     </ion-grid>
 
     <ion-grid *ngSwitchCase="'old'" style="height: 500px;">
-      <ion-card *ngFor="let order of rejectOrders" width-50 (click)="showDetails(order)">
-        <ion-card-content>
-          <p style="float: left;">
-            <span style="font-weight: bold;">Order Ref :</span>{{order.orderRef}}
-          </p>
-          <br>
-          <p style="float: right;">
-            <span style="font-weight: bold;">Order Qty :</span>{{order.totalCount}}
-          </p>
-          <br>
-          <p style="float: left;">
-            <span style="font-weight: bold;">Vendor Name :</span>{{order.userName}}
-          </p>
-          <br>
-          <br>
-          <p style="float: right;">
-            <span style="font-weight: bold;">Vendor Mobile :</span>{{order.mobile}}
-          </p>
-        </ion-card-content>
-      </ion-card>
+      <ion-content padding>
+        <ion-card *ngFor="let order of oldsurplusDetails" width-50 (click)="showDetails(order)">
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-7>
+                <p style="margin: 7px;">
+                  <span style="font-weight: bold;">Order Ref :</span>{{order.id}}
+                </p>
+                <br>
+                <p style="margin: 7px;">
+                  <span style="font-weight: bold;">Order Qty :</span>{{order.realQty}}
+                </p>
+                <br>
+                <p style="margin: 7px;">
+                  <span style="font-weight: bold;">Name :</span>{{order.productName}}
+                </p>
+                <br>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-avatar>
+                    <img style="float: right; width: 100%; height: 100%;" src="{{order.thumb}}">
+                  </ion-avatar>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
     </ion-grid>
   </div>
 </ion-content>

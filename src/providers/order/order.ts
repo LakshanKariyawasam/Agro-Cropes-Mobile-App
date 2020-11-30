@@ -21,6 +21,7 @@ export class OrderProvider {
   pendingorders: Array<any> = [];
   ordersDetails: Array<any> = [];
   surplusDetails: Array<any> = [];
+  oldsurplusDetails: Array<any> = [];
   a: number;
   constructor(public events: Events) { }
 
@@ -31,6 +32,7 @@ export class OrderProvider {
         orderRef: orderRef,
         acceptStatus: 0,
         userId: orderObj.userId,
+        perentBisId: orderObj.perentBisId,
         userName: orderObj.name,
         totalCount: orderObj.count,
         dateInserted: new Date().toLocaleDateString()
@@ -311,6 +313,32 @@ export class OrderProvider {
     });
   }
 
+  getOldSurplusDetails(userId) {
+    this.surplusRef.orderByChild('userId').equalTo(userId).once('value', (snap) => {
+      this.oldsurplusDetails = [];
+      if (snap.val()) {
+        var tempSurplusDetails = snap.val();
+        for (var key in tempSurplusDetails) {
+          if (tempSurplusDetails[key].acceptStatus == 1) {
+            let singleOrder = {
+              id: key,
+              productName: tempSurplusDetails[key].productName,
+              qty: tempSurplusDetails[key].realQty,
+              thumb: tempSurplusDetails[key].thumb
+            };
+            this.oldsurplusDetails.push(singleOrder);
+          }
+        }
+      }
+      this.events.publish('oldsurplusDetailsLoaded');
+    });
+  }
+
+  getOrderDetailsCount(userId) {
+    return this.orderRef.orderByChild('perentBisId').equalTo(userId).once('value', (snap) => {
+    });
+  }
+
   acceptOrder(order: any) {
     var promise = new Promise((resolve, reject) => {
       firebase.database().ref('orders/' + order.id + '/acceptStatus').set(1).then(() => {
@@ -331,6 +359,7 @@ export class OrderProvider {
               productName: order.productName,
               qty: qty,
               thumb: order.thumb,
+              order: order.id,
               dateInserted: new Date().toLocaleDateString()
             };
             this.surplusDetailsRef.push(surplusObject).then(() => {
@@ -359,6 +388,15 @@ export class OrderProvider {
   rejectOrder(order: any) {
     var promise = new Promise((resolve, reject) => {
       firebase.database().ref('orders/' + order.id + '/acceptStatus').set(3).then(() => {
+        resolve(true);
+      })
+    });
+    return promise;
+  }
+
+  rejectSurplusOrder(order: any) {
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('surplus/' + order.id + '/acceptStatus').set(3).then(() => {
         resolve(true);
       })
     });

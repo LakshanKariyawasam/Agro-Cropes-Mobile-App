@@ -50,6 +50,10 @@ export class TutorialPage {
     this.storage.set('hasSeenTutorial', 'true');
   }
 
+  skipApp() {
+    this.navCtrl.push('RegisterPage');
+  }
+
   onSlideChangeStart(slider) {
     this.showSkip = !slider.isEnd;
   }

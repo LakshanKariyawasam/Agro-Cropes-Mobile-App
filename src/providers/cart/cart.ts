@@ -51,17 +51,22 @@ export class CartProvider {
       console.log('surplusObject :::', surplusObject);
       this.surplusRef.push(surplusObject).then(() => {
         resolve({ success: true });
-      })
+      });
     });
     return promise;
   }
 
-  removeFromCart(product) {
+  removeFromCart(itm, cart) {
     return this.getCartItems().then(result => {
       if (result) {
-        var productIndex = result.indexOf(product);
-        result.splice(productIndex, 1);
-        return this.storage.set(CART_KEY, result);
+        let index = cart.indexOf(itm);
+        console.log('product :::', itm);
+        console.log('result :::', cart);
+        console.log('index :::', index);
+        if (index > -1) {
+          cart.splice(index, 1);
+        }
+        return this.storage.set(CART_KEY, cart);
       }
     })
   }

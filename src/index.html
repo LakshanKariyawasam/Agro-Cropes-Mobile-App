@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
-  <title>Agro Cropes</title>
+  <title>Agro Crops</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
@@ -16,23 +17,35 @@
 
   <link href="build/main.css" rel="stylesheet">
 
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+  </script>
+
 </head>
+
 <body>
-<!-- Ionic's root component and where the app will load -->
-<ion-app></ion-app>
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app></ion-app>
 
-<!-- load google map api -->
-<script  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBpwbltZSqDmScWEoVZPIANvXeyfxtjcug" async defer type="text/javascript"></script>
+  <!-- load google map api -->
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBpwbltZSqDmScWEoVZPIANvXeyfxtjcug" async defer
+    type="text/javascript"></script>
 
-<!-- The polyfills js is generated during the build process -->
-<script src="build/polyfills.js"></script>
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
 
-<!-- The vendor js is generated during the build process
+  <!-- The vendor js is generated during the build process
      It contains all of the dependencies in node_modules -->
-<script src="build/vendor.js"></script>
+  <script src="build/vendor.js"></script>
 
-<!-- The bundle js is generated during the build process -->
-<script src="build/main.js"></script>
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
 
 </body>
+
 </html>

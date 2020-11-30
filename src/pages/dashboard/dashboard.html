@@ -9,15 +9,100 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Dashboard</ion-title>
+    <ion-title>DASHBOARD</ion-title>
   </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="statusChange" color="light" (ionChange)="loadData()">
+      <ion-segment-button value="daily">
+        DAILY &nbsp;
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        TOTAL &nbsp;
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="dark">
-  <div padding-horizontal text-center class="animated fadeInDown">
-    <div class="logo"></div>
-    <h2 ion-text class="text-primary">
-      <strong>Agro Cropes</strong>
-    </h2>
+
+  <div [ngSwitch]="statusChange">
+    <ion-grid *ngSwitchCase="'daily'">
+      <div padding-horizontal text-center class="animated fadeInDown">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title style="color: darkgrey;">TODAY ORDERS TILL NOW</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-5>
+                <ion-row>
+                  <span class="font2" color="danger">
+                    {{todayAcceptOrderCount}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <h2 style=" font-size: medium; font-family: -webkit-pictograph; color: mediumblue; font-weight: 600;">
+                    Order Accepted</h2> &nbsp; <br>
+                </ion-row>
+                <ion-row>
+                  <span class="font2" color="blue">
+                    {{todayRejectOrderCount}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <h2 style=" font-size: medium; font-family: -webkit-pictograph; color: red;font-weight: 600;">Order
+                    Rejected</h2> &nbsp; <br>
+                </ion-row>
+              </ion-col>
+              <ion-col>
+                <div id="donut_today" style="position: fixed;"></div>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-grid>
+    <ion-grid *ngSwitchCase="'all'" style="height: 500px;">
+      <div padding-horizontal text-center class="animated fadeInDown">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title style="color: darkgrey;">TOTAL ORDERS TILL NOW</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-5>
+                <ion-row>
+                  <span class="font2" color="danger">
+                    {{allAcceptOrderCount}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <h2 style=" font-size: medium; font-family: -webkit-pictograph; color: mediumblue; font-weight: 600;">
+                    Order Accepted</h2> &nbsp; <br>
+                </ion-row>
+                <ion-row>
+                  <span class="font2" color="blue">
+                    {{allRejectOrderCount}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <h2 style=" font-size: medium; font-family: -webkit-pictograph; color: red;font-weight: 600;">Order
+                    Rejected</h2> &nbsp; <br>
+                </ion-row>
+              </ion-col>
+              <ion-col>
+                <div id="donut_all" style="position: fixed;"></div>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-grid>
+
+
+    <!-- <button ion-button (click)="showTodaySales()">
+      Show Chart
+    </button> -->
   </div>
 </ion-content>

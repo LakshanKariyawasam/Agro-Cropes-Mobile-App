@@ -18,5 +18,7 @@ export const config = {
           messagingSenderId: "309560786035",
           appId: "1:309560786035:web:b8038ddd5e947117f03e06",
           measurementId: "G-QC2JM0BXN8"
-     }
+     },
+     APP_VERSION2: 2.1,
+     APP_VERSION: "2.1",
 };

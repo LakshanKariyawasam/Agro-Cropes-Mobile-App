@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import * as Nexmo from 'nexmo';
 
 /**
  * Generated class for the SendSmsPage page.
@@ -25,23 +24,23 @@ export class SendSmsPage {
 
   sendSms() {
 
-    var promise = new Promise((resolve, reject) => {
-      // const Nexmo = require('nexmo');
+    // var promise = new Promise((resolve, reject) => {
+    //   const Nexmo = require('nexmo');
 
-      const nexmo = new Nexmo({
-        apiKey: '80b3c93f',
-        apiSecret: 'Tf9m9LLQMNB7IQPB',
-      });
+    //   const nexmo = new Nexmo({
+    //     apiKey: '80b3c93f',
+    //     apiSecret: 'Tf9m9LLQMNB7IQPB',
+    //   });
 
-      const from = 'Agro Cropes';
-      const to = '94702378925';
-      const text = 'Hello from Vonage SMS API. And this is test msg for nexmo.';
+    //   const from = 'Agro Crops';
+    //   const to = '94702378925';
+    //   const text = 'Hello from Vonage SMS API. And this is test msg for nexmo.';
 
-      nexmo.message.sendSms(from, to, text);
-      resolve(true);
-    })
+    //   nexmo.message.sendSms(from, to, text);
+    //   resolve(true);
+    // })
 
-    return promise;
+    // return promise;
   }
 
 }

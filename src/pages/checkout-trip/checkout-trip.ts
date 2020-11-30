@@ -43,7 +43,7 @@ export class CheckoutTripPage {
       showCloseButton: true,
       cssClass: 'profile-bg',
       message: 'Book Activity Success!',
-      duration: 3000,
+      duration: 1000,
       position: 'bottom'
     });
 
